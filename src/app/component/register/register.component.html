@@ -1,0 +1,42 @@
+<h2>Register Page</h2>
+<div>
+    <h2>Register</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email"  formControlName="email" >   
+            <i style="color:tomato" *ngIf="registerForm.controls['email'].invalid && (registerForm.controls['email'].dirty || registerForm.controls['email'].touched)">Email is Required and Must be Valie</i> 
+         </div>
+         <div>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" formControlName="password"  >    
+            <i style="color:tomato" *ngIf="registerForm.controls['password'].invalid && (registerForm.controls['password'].dirty || registerForm.controls['password'].touched)">Password is Required and Must be Valie</i> 
+         </div>
+         <button [disabled]="registerForm.invalid" type="submit">Register</button>
+    </form>
+</div>
+
+<div class="background-container">
+    <div class="glass-alt container">
+        <div>
+            <p class="title-text">Register</p>
+            <form class="form-container" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                <div class="form-row">
+                    
+                        <label class="header-text" for="email">Email</label>
+                        <input class="input-class" type="email" id="email" name="email" placeholder="Enter your email" formControlName="email">
+                    </div>
+                    <div class="form-row">
+                        <label class="header-text" for="password">Password</label>
+                        <input class="input-class" id="password" name="password" placeholder="Enter your password" formControlName="password">
+                    </div>
+                </div>
+                <button class="button-alt" [disabled]="registerForm.invalid" type="submit"><span class="button-text-alt">Register</span></button>
+                <div> <i class="error-text" *ngIf="registerForm.controls['email'].invalid && (registerForm.controls['email'].dirty || registerForm.controls['email'].touched)">Email is Required and Must be Valid</i></div>
+                <div> <i class="error-text" *ngIf="registerForm.controls['password'].invalid && (registerForm.controls['password'].dirty || registerForm.controls['password'].touched)">Password is Required and Must be Valid</i></div>
+                <div> <button class="register-button"  (click)="onLogin()"><span class="register-text">Login</span></button></div>
+            </form>
+        </div>
+    </div>
+</div>

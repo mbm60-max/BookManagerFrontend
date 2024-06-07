@@ -1,0 +1,174 @@
+.hero-container{
+    position: relative;
+    width: 100%;
+    height: 120%;
+    z-index: -1;
+}
+.hero-image{
+   position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../../assets/Hero.png');
+    background-size: cover;
+    background-position: center bottom;
+}
+.start-background{
+    width:100%;
+    height: 440px;
+    background-color: #2A181D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -2px;
+}
+.left{
+    justify-content: left;
+}
+.right{
+    justify-content: right;
+}
+
+.tutorial-title{
+    width:100%;
+    height: 150px;
+    background-color: #C7844D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tutorial-text{
+    font-family: 'Roashe';
+    font-size: 5.5rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 25px;
+    }
+.tutorial-background{
+    width:100%;
+    height: 850px;
+    background-color: #C7844D;
+    display: flex;
+    align-items: center;
+}
+.grey-background{
+    width:100%;
+    height: 170px;
+    background-color: #575855;
+    display: flex;
+    align-items: center;
+}
+.footer-background{
+    width:100%;
+    height: 330px;
+    background-color: #DEDEDE;
+    display: flex;
+    align-items: center;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    justify-content: center;
+    align-items: center;
+    background-color: #5b2D20;
+    border-radius: 10px;
+}
+.info-div{
+    text-align: left; 
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+.info-title{
+font-family: 'Roashe';
+font-size: 2.5rem;
+color: rgba(255, 255, 255, 0.6);
+margin-bottom: 25px;
+}
+@media screen and (max-width: 768px) {
+    .info-title{
+        font-size: 2rem;
+    }
+    .info-text {
+        font-size: 1em!important; 
+    }
+}
+.info-text{
+    font-family: 'Archivo-Thin';
+    font-size: 1.2em;
+    color: rgba(255, 255, 255, 0.6);
+}
+.large {
+  width: auto; /* Reset width */
+}
+
+.button-container.large:first-child {
+  margin-right: 100px; /* Add space between the button containers */
+}
+
+.large {
+    width: 25em;
+    height: 280px;
+}
+
+.small {
+    width: 430px;
+    height: 200px;
+}
+
+
+
+.title-container {
+   position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 0; /* Ensure the title is above the image */
+}
+.footer-container-left{
+    left:0;
+    width: 20%; /* Set the width of the footer */
+    background-color: #DEDEDE;
+}
+.footer-container-right {
+    width: 60%;
+    background-color: #DEDEDE;
+    position: relative;
+    /* Your existing styles */
+  }
+  .footer-container-end{
+    width: 20%;
+    background-color: #DEDEDE;
+    position: relative;
+
+    /* Your existing styles */
+  }
+  
+  .semicircle-overlay {
+    position: absolute; /* Position the semicircle absolutely within the container */
+    bottom: -200px; /* Adjust the bottom position to bring the top half into view */
+    right: -200px; /* Adjust the right position */
+    width: 300px; /* Adjust the width of the semicircle as needed */
+    height: 300px; /* Adjust the height of the semicircle as needed */
+    background-color: black; /* Set the background color of the semicircle */
+    border-radius: 300px 300px 300px 0; /* Use border-radius to create a semicircle */
+    transform: rotate(180deg); /* Rotate the semicircle to display the top half */
+  }
+  
+  /* Style the mat-grid-list */
+  .mat-grid-list {
+    height: 100%; /* Set the height to cover the entire height of the navbar */
+  }
+
+  .ellipse-overlay {
+    position: absolute; /* Position the ellipse absolutely within the container */
+    bottom: -150px; /* Align the ellipse to the bottom */
+    right: 400px; /* Align the ellipse to the right */
+    width: 300px; /* Adjust the width of the ellipse as needed */
+    height: 100px; /* Adjust the height of the ellipse as needed */
+    background-color: black; /* Set the background color of the ellipse */
+    border-radius: 50%; /* Create an ellipse shape using border-radius */
+    transform: scaleX(2); /* Scale horizontally to create an ellipse */
+  }

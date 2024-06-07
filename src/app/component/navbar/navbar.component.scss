@@ -1,0 +1,21 @@
+.navbar-container-left {
+    position: fixed; /* Position the navbar relative to the viewport */
+    left: 0; /* Align the navbar to the left */
+    top: 0; /* Align the navbar to the top */
+    width: 40%; /* Set the width of the navbar */
+    height: 100%; /* Set the height of the navbar to cover the entire viewport */
+    z-index: 1;
+  }
+  .navbar-container-right {
+    position: fixed; /* Position the navbar relative to the viewport */
+    right: 0; /* Align the navbar to the left */
+    top: 0; /* Align the navbar to the top */
+    width: 40%; /* Set the width of the navbar */
+    height: 100%; /* Set the height of the navbar to cover the entire viewport */
+    z-index: 1;
+  }
+  
+  /* Style the mat-grid-list */
+  .mat-grid-list {
+    height: 100%; /* Set the height to cover the entire height of the navbar */
+  }
