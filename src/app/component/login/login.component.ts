@@ -21,17 +21,29 @@ export class LoginComponent {
       password:formBuilder.control('',[Validators.required, Validators.minLength(7)]),
   })}
   public onSubmit(){
-    //make call to http request to sigin and use response here
-    (this.loginForm.value.email,this.loginForm.value.password).then((res: any)=>{
-      if(res.data.user!.role == "authenticated"){
-        const { name, id, email } = res.data.user;
-        console.log("auth")
-      this.router.navigate(['/home']);
-      this.authService.setAuth({ name, id, email,isLoggedIn:true });
-      }
-    }).catch((err: any)=>{
-      console.log(err);
-    })
+    if (this.loginForm.valid) {
+      const { email, password } = this.loginForm.value;
+      this.authService.signin(email, password).subscribe(
+        (res: any) => {
+          if (res.id && res.isAuthenticated) {
+            const name = "None";
+            const id = res.id;
+            console.log("Authenticated");
+            this.authService.setAuth({
+            name, id, email, isLoggedIn: true
+            });
+            this.router.navigate(['/home']);
+          } else {
+            console.error('Authentication failed', res);
+            // Handle authentication failure
+          }
+        },
+        (err: any) => {
+          console.error('Signin failed', err);
+          // Handle error
+        }
+      );
+    }
   } 
   onRegister(){
     this.router.navigate(['/register']);

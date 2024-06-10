@@ -1,76 +1,43 @@
 <app-navbar></app-navbar>
-<div class="hero-container">
-  <div class="hero-image"></div>
-  <div class="title-container">
-    <p class="title">Dune</p>
-    <p class="header archivo">THE BOARD GAME</p>
-    <p class="header gaia">He who control the spice controls the universe</p>
+  <div class="container">
+      <!-- Show login view if user is not logged in -->
+      <div *ngIf="!authStatus.isLoggedIn" class="currentBookContainer">
+        <div class="banner">Date</div>
+        <div class="body">
+          <div class="body4th"><p>Welcome please login</p></div>
+          <div class="body4th"><p>Welcome please login</p></div>
+          <div class="body4th"><p>Welcome please login</p></div>
+          <div class="body4th"><p>Welcome please login</p></div>
+        </div>  
+      </div> 
+      <div *ngIf="!authStatus.isLoggedIn" class="booksContainer">
+        <div class="banner">Date</div>
+        <div class="booksBody">
+         book list
+        </div>  
+      </div> 
+      <!-- Show logged-in view if user is logged in -->
+      <div *ngIf="authStatus.isLoggedIn" class="currentBookContainer">
+        <div class="banner">Date Welcome{{authStatus.email}} your id is {{authStatus.id}}</div>
+        <div class="body">
+          <div class="body4th"><p>Welcome please login</p></div>
+          <div class="body4th"><p>Welcome please login</p></div>
+          <div class="body4th"><p>Welcome please login</p></div>
+          <div class="body4th"><p>Welcome please login</p></div>
+        </div>  
+      </div> 
+      <div *ngIf="authStatus.isLoggedIn" class="booksContainer">
+        <div class="banner">Date</div>
+        <div class="booksBody">
+          <mat-grid-list cols="10" rowHeight="100px">
+            <mat-grid-tile *ngFor="let book of books" [colspan]="book.cols" [rowspan]="book.rows">
+              <ng-container>
+                <button >
+                  {{book.name}}
+                </button>
+              </ng-container>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </div>  
+      </div> 
   </div>
-</div>
-<div class="start-background">
-  <div class="button-container large">
-    <div class="info-div">
-    <p class="info-title">CREATING A GAME</p>
-    <p class="info-text" >1.Click the button</p>
-    <p class="info-text" >2.Pick a house</p>
-    <p class="info-text" >3.Share the code with a friend</p>
-    <p class="info-text" >4.Start the game</p>
-  </div>
-    <div class="button"> <button class="button" (click)="handleCreateGame()"><span class="button-text">Create Game</span></button></div>
-  </div>
-  <div class="button-container large">
-    <div class="info-div">
-    <p class="info-title">Joining A GAME</p>
-    <p class="info-text" >1.Click the button</p>
-    <p class="info-text" >2.Enter the code</p>
-    <p class="info-text" >3.Join the lobby </p>
-    <p class="info-text" >4. Wait for the host to start the game</p>
-  </div>
-    <div class="button"><button class="button" (click)="handleJoinGame()"><span class="button-text">Join Game</span></button></div>
-  </div>
-</div>
-<div class="tutorial-title">
-  <p class="tutorial-text">TUTORIAL</p>
-</div>
-<div class="tutorial-background">
-<div class="glass container">Video</div>
-</div>
-<div class="grey-background"></div>
-<div class="footer-background">
-  <div class="footer-container-left">
-    <mat-grid-list cols="6" rowHeight="100px">
-      <mat-grid-tile *ngFor="let tile of tilesLeft" [colspan]="tile.cols" [rowspan]="tile.rows">
-        <ng-container *ngIf="tile.text === 'Logout'; else loginLink">
-          <button class="footer-button" >
-            <span class="footer-text">{{ tile.text }}</span>
-          </button>
-        </ng-container>
-        <ng-template #loginLink>
-          <button class="footer-button">
-            <a class="footer-text" >{{ tile.text }}</a>
-          </button>
-        </ng-template>
-      </mat-grid-tile>
-    </mat-grid-list>
-  </div>
-  <div class="footer-container-right">
-    <mat-grid-list cols="10" rowHeight="100px">
-      <mat-grid-tile *ngFor="let tile of tilesRight" [colspan]="tile.cols" [rowspan]="tile.rows">
-        <ng-container *ngIf="tile.text === 'GITHUB'; else loginLink">
-          <button class="footer-button">
-            <a class="footer-text" href="{{ tile.link }}" target="_blank">{{ tile.text }}</a>
-          </button>
-        </ng-container>
-        <ng-template #loginLink>
-          <button class="footer-button">
-            <a class="footer-text">{{ tile.text }}</a>
-          </button>
-        </ng-template>
-      </mat-grid-tile>
-    </mat-grid-list>
-    <div class="ellipse-overlay"></div>
-  </div>
-  <div class="footer-container-end"><div class="semicircle-overlay"></div></div>
-</div>
-<div>
-</div>

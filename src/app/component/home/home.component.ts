@@ -4,7 +4,13 @@ import { NgForOf, NgIf } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { AuthProps, AuthService } from '../../services/auth.service';
 import { NavbarComponent, Tile } from '../navbar/navbar.component';
-
+import { BookService } from '../../services/book.service';
+export interface Book {
+  cols: number;
+  rows: number;
+  text: string;
+  link:string;
+}
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -17,27 +23,26 @@ export class HomeComponent implements OnInit {
     email: '',
     name: '',
     id: '',
-    isLoggedIn: false,
+    isLoggedIn: true,
   };
-  tilesLeft: Tile[] = [];
-  tilesRight: Tile[] = [];
-  constructor(private authService: AuthService, private router: Router) {
-    this.updateTiles(); // Initially update tiles
+  books:Book[]=[];
+  constructor(private authService: AuthService, private router: Router,private bookService:BookService ) {
   }
-  
-  updateTiles() {
-    this.tilesLeft = [
-    ];
-    this.tilesRight =[
-      { text: 'HOME', cols: 2, rows: 1,link: '/home' },
-      {text: 'RULES', cols: 2, rows: 1,link: '/home' },
-      {text: 'SUPPORT', cols: 2, rows: 1,link: '/home' },
-      {text: 'GITHUB', cols: 2, rows: 1,link: 'https://github.com/mbm60-max/AngularGame' },
-      {text: 'LICENSE', cols: 2, rows: 1,link: '/home' },
-    ]
+  updateBookList(): void {
+    this.bookService.getBooks(this.authStatus.id).subscribe(
+      (response) => {
+        this.books = response;
+        console.log(this.books);
+      },
+      (error) => {
+        console.error('Error fetching books:', error);
+      }
+    );
   }
   ngOnInit() {
     this.authStatus = this.authService.getStatus();
-    this.updateTiles(); 
+    if(this.authStatus.isLoggedIn){
+      this.updateBookList();
+    }
   }
 }
