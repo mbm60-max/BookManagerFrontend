@@ -16,6 +16,9 @@
     display: flex;
 }
 
+.buttonContainer{
+    width:50%;
+}
 .booksContainer {
     width: 50%;
     background-color: red;
@@ -24,6 +27,17 @@
     justify-content: center;
     align-items: center; /* Center content vertically */
     flex-direction: column;
+}
+.book{
+    width:100px;
+    height:100px;
+    background-color: grey;
+    justify-content: center;
+    display: flex;
+}
+.button{
+    width:100px;
+    height:100px;
 }
 .banner{
     width:100%;

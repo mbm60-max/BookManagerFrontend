@@ -1,9 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, catchError, tap, throwError } from 'rxjs';
 
 export interface Book{
-  Author:string,
+  id:string,
+  name:string,
+  notesId:string,
+  totalPages:number,
+  pagesRead:number,
+  imageRef:string,
+  ownerId:string,
+  author:string,
 }
 @Injectable({
   providedIn: 'root'
@@ -15,27 +22,34 @@ export class BookService {
   constructor(private http: HttpClient) {}
 
   getBooks(OwnerId:string): Observable<any> {
-    const url = `${this.baseUrl}`;
+    const url = `${this.baseUrl}/ownedBy/${OwnerId}`;
     console.log("attempting to get all books")
-    return this.http.get<any>(url);
+    return this.http.get<any>(url)
   }
+ 
   createBook(book:Book):Observable<any>{
     const url = `${this.baseUrl}`;
-    const body = {book}
-    return this.http.post<any>(url,body)
+    return this.http.post<any>(url, book).pipe(
+      tap(response => {
+        if (response) {
+          // Update the book object with the returned ID
+          book.notesId = response.id;
+          book.id = response.id;
+        }
+      })
+    );
   }
   getBookById(BookId:string):Observable<any>{
     const url = `${this.baseUrl}/${BookId}`;
     console.log("attempting to get book by id")
     return this.http.get<any>(url);
   }
-  updateBooks(BookId:string,book:Book):Observable<any>{
+  updateBook(BookId:string,book:Book):Observable<any>{
     const url = `${this.baseUrl}/${BookId}`;
-    const body = {book}
     console.log("attempting to update book by id")
-    return this.http.post<any>(url,body)
+    return this.http.put<any>(url,book)
   }
-  deleteBooks(BookId:string,book:Book):Observable<any>{
+  deleteBook(BookId:string,book:Book):Observable<any>{
     const url = `${this.baseUrl}/${BookId}`;
     console.log("attempting to delete book by id")
     return this.http.delete<any>(url)

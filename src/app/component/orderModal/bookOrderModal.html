@@ -1,0 +1,7 @@
+<button type="button" (click)="onSubmit()">Submit</button>
+<button type="button" (click)="onClose()">Cancel</button>
+<div cdkDropList  class="example-list" (cdkDropListDropped)="drop($event)">
+    @for (item of orderList; track item) {
+      <div class="example-box" cdkDragBoundary=".example-list" cdkDrag>{{item.name}}</div>
+    }
+  </div>

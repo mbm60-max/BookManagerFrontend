@@ -29,12 +29,34 @@
       <div *ngIf="authStatus.isLoggedIn" class="booksContainer">
         <div class="banner">Date</div>
         <div class="booksBody">
+          <div class="buttonContainer">
+             <button class="button" (click)="createBook()">
+            <span >Add Book</span>
+          </button>
+        </div>
+        <button class="button" (click)="editOrder(bookOrders)">
+          Edit book order
+        </button>
+          <p *ngIf="errorMessage">{{ errorMessage }}</p>
           <mat-grid-list cols="10" rowHeight="100px">
             <mat-grid-tile *ngFor="let book of books" [colspan]="book.cols" [rowspan]="book.rows">
               <ng-container>
-                <button >
-                  {{book.name}}
-                </button>
+                <div class="book">
+                  <p>{{book.name}}
+                  {{book.author}}
+                  {{book.pagesRead}}/{{book.totalPages}}
+                  {{book.imageRef}}
+                  </p>
+                  <button (click)="editBook(book)">
+                    Edit 
+                  </button>
+                  <button (click)="deleteBook(book)">
+                    Delete
+                  </button>
+
+                    <a class="navbar-text" [routerLink]="['/notes', book.id]">View Notes</a>
+  
+                </div>
               </ng-container>
             </mat-grid-tile>
           </mat-grid-list>

@@ -1,0 +1,15 @@
+<button>  <a class="navbar-text" [routerLink]="['/home']">Home</a></button>
+<h1>Welcome to the notes page</h1>
+
+<div *ngIf="editMode">
+  <textarea [(ngModel)]="note.content" rows="10" cols="30"></textarea>
+  <button (click)="saveNote()">Save</button>
+  <button (click)="cancel()">Cancel</button>
+</div>
+
+<div *ngIf="!editMode">
+    <markdown *ngIf="note.content">
+        {{note.content}}
+      </markdown>
+  <button (click)="toggleEditMode()">Edit</button>
+</div>
