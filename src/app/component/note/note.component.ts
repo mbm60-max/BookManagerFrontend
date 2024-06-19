@@ -51,7 +51,6 @@ export class NoteComponent implements OnInit {
           console.error('Error fetching note:', error);
         }
       );
-      console.log("current content",this.note.content)
     } else {
       console.log('No note id in query so could not return a result');
     }

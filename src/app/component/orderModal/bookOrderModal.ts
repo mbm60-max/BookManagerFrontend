@@ -18,7 +18,6 @@ export class BookOrderModal {
     public dialogRef: MatDialogRef<BookOrderModal>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { 
-    console.log(data);
     for (const key in data) {
         if (data.hasOwnProperty(key)) {
           const item = data[key];
@@ -30,8 +29,6 @@ export class BookOrderModal {
           });
         }
       }
-  
-      console.log("Order List:", this.orderList);
   }
 
   onSubmit(): void {

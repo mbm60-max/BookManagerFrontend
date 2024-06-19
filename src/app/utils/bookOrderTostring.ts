@@ -25,6 +25,7 @@ import { BookOrder } from "../component/home/home.component";
   function reindex(bookOrders: BookOrder[]): BookOrder[] {
     // Remove the item at the specified index
     // Reindex the remaining items
+    console.log("Orders",bookOrders);
     return bookOrders.map((order, newIndex) => ({
       ...order,
       index: newIndex

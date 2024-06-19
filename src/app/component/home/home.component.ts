@@ -53,9 +53,10 @@ export class HomeComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router,private bookService:BookService,private bookEditService:BookEditModalService,private bookCreateService:BookCreateModalService,private bookDeleteService:BookDeleteModalService,private noteService:NoteService,private bookOrderService:BookOrderModalService,private orderService:OrderService) {
   }
   updateBookList(): void {
-    console.log(this.authStatus.id);
+  
     this.bookService.getBooks(this.authStatus.id).subscribe(
-      (response) => {
+      (response) => {  
+        console.log('called upate books with arguments',response)
         this.books = response.map((book: { cols: number; rows: number; }) => {
           // Assign arbitrary values to cols and rows properties
           book.cols = 2 // Random number between 1 and 5 for cols
@@ -63,7 +64,6 @@ export class HomeComponent implements OnInit {
           return book;
         });
         this.books = response;
-        console.log(this.books);
         if (this.books.length === 0) {
           this.errorMessage = "You don't have any books available, please add one";
         } else {
@@ -80,6 +80,7 @@ export class HomeComponent implements OnInit {
     this.authStatus = this.authService.getStatus();
     if(this.authStatus.isLoggedIn){
       this.updateBookList();
+      this.getOrder();
        // Subscribe to the bookUpdated$ observable
        this.bookEditService.bookUpdated$.subscribe(updatedBook => {
         const index = this.books.findIndex(book => book.id === updatedBook.id);
@@ -96,18 +97,13 @@ export class HomeComponent implements OnInit {
         this.books=[...this.books,newBook];
         this.getOrder();
       });
-      this.bookDeleteService.bookDeleted$.subscribe(deletedBook => {
-        console.log("DeletedBook",deletedBook);
-        const index = this.books.findIndex(b => b.id === deletedBook.id);
-        if (index !== -1) {
-          console.log("found book");
-          this.books.splice(index, 1);
-        }
-        this.getOrder();
+      this.bookDeleteService.bookDeleted$.subscribe(newOrder => {
+        console.log(newOrder)
+        this.bookOrders =newOrder;
       });
       this.bookOrderService.orderUpdated$.subscribe(updatedOrder =>{
-        console.log("Updated order",updatedOrder);
         this.bookOrders = updatedOrder;
+        this.updateBookList();
       })
       this.getOrder();
     }
@@ -131,29 +127,25 @@ export class HomeComponent implements OnInit {
     if (order){
       let unparsedList = order.orderJsonAsString as string;
       //unparsedList= unparsedList.OrderJsonAsString;
-      console.log(unparsedList)
       if (unparsedList.startsWith("\"") && unparsedList.endsWith("\"")) {
         unparsedList = unparsedList.slice(1, -1); // Remove surrounding quotes
       }
       unparsedList = unparsedList.replace(/\\/g, ''); // Remove escape characters
-  
-      console.log("Formatted string:", unparsedList);
-  
+
       try {
         const parsedData = JSON.parse(unparsedList); 
         for (const key in parsedData) {
           if (parsedData.hasOwnProperty(key)) {
             const orderData = parsedData[key];
             const bookOrder: BookOrder = {
-              bookId: orderData.BookId,
-              ownerId: orderData.OwnerId,
+              bookId: orderData.bookId,
+              ownerId: orderData.ownerId,
               index: parseInt(key), // Assuming the index is provided in the JSON string
-              name: orderData.Name,
+              name: orderData.name,
             };
             bookOrders.push(bookOrder); 
           }
         }
-        console.log("Parsed orderList:", bookOrders);
         return bookOrders;
       } catch (error) {
         console.error("Error parsing JSON string:", error);
@@ -168,7 +160,7 @@ export class HomeComponent implements OnInit {
     this.orderService.getOrderById(this.authStatus.id).subscribe(
       (response) => {
         this.bookOrders = this.parseBookOrders(response);
-        console.log(this.bookOrders);
+        console.log("order",response)
         if (this.bookOrders.length === 0) {
           this.errorMessage = "You don't have any books available, please add one";
         } else {

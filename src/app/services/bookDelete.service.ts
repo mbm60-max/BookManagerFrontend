@@ -13,7 +13,7 @@ import { removeAndReindex } from '../utils/bookOrderTostring';
   providedIn: 'root'
 })
 export class BookDeleteModalService {
-  private bookDeletedSubject = new Subject<BookTile>();
+  private bookDeletedSubject = new Subject<BookOrder[]>();
   bookDeleted$ = this.bookDeletedSubject.asObservable();
   constructor(private dialog: MatDialog, private bookService: BookService,private noteService:NoteService,private orderService:OrderService) { }
   private bookId:string='';
@@ -31,7 +31,6 @@ export class BookDeleteModalService {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
       if (result) {
         const book = result;
         // Call a method to update the book list in the parent component
@@ -41,14 +40,12 @@ export class BookDeleteModalService {
                 this.noteService.deleteNote(this.bookId).subscribe(
                     result => {
                         console.log("Note Deleted:", this.bookId);
-                        const index = this.books.findIndex(b => b.id === this.bookId);
-                        console.log(this.books)
-                        if (index !== -1) {
-                            console.log("passed index check");
-                            this.books.splice(index, 1);
-                            console.log("Current order",this.bookOrder)
-                            const updatedOrder = removeAndReindex(this.bookOrder, index);
-                            console.log("Order to remove", updatedOrder);
+                        const indexOrder = this.bookOrder.findIndex(b => b.bookId === this.bookId);
+                        const indexBooks = this.books.findIndex(b => b.id === this.bookId);
+                        if (indexOrder !== -1 && indexBooks !== -1) {
+                            this.books.splice(indexBooks, 1);
+                            const updatedOrder = removeAndReindex(this.bookOrder, indexOrder);
+                            this.bookOrder =updatedOrder;
                             this.orderService.updateOrderById(userId, updatedOrder).subscribe(
                                 result => {
                                     console.log("Order updated:", result);
@@ -58,7 +55,7 @@ export class BookDeleteModalService {
                                 }
                             );
                         }
-                        this.bookDeletedSubject.next(book);
+                            this.bookDeletedSubject.next(this.bookOrder);
                     },
                     error => {
                         console.error('Error deleting notes:', this.bookId);

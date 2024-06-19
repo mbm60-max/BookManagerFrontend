@@ -34,29 +34,21 @@ export class AuthService {
   signup(email: string, password: string): Observable<any> {
     const url = `${this.baseUrl}/signup`;
     const body = { email, password };
-    console.log("attempt to sign up")
-    console.log(url,body);
     return this.http.post<any>(url, body);
   }
   signin(email: string, password: string): Observable<any> {
     const url = `${this.baseUrl}/signin`;
     const body = { email, password };
-    console.log("attempt to sign in")
-    console.log(url,body);
     return this.http.post<any>(url, body);
   }
   updateUser(email: string, password: string): Observable<any> {
     const url = `${this.baseUrl}/updateUser`;
     const body = { email, password };
-    console.log("attempt to update user")
-    console.log(url,body);
     return this.http.post<any>(url, body);
   }
   deleteUser(id:string,email: string, password: string): Observable<any> {
     const url = `${this.baseUrl}/${id}`;
     const body = { email, password };
-    console.log("attempt to update user")
-    console.log(url,body);
     return this.http.delete<any>(url);
   }
 }

@@ -19,12 +19,10 @@ export class NoteService {
 
   getNoteById(NoteId:string):Observable<any>{
     const url = `${this.baseUrl}/${NoteId}`;
-    console.log("attempting to get note by id")
     return this.http.get<any>(url);
   }
   updateNote(NoteId: string, newContent: string): Observable<any> {
     const url = `${this.baseUrl}/${NoteId}`;
-    console.log("Attempting to update note by id");
   
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
@@ -39,7 +37,6 @@ export class NoteService {
   
   deleteNote(NoteId:string):Observable<any>{
     const url = `${this.baseUrl}/${NoteId}`;
-    console.log("attempting to delete note by id")
     return this.http.delete<any>(url)
   }
 }

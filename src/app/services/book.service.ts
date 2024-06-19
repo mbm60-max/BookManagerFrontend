@@ -23,7 +23,6 @@ export class BookService {
 
   getBooks(OwnerId:string): Observable<any> {
     const url = `${this.baseUrl}/ownedBy/${OwnerId}`;
-    console.log("attempting to get all books")
     return this.http.get<any>(url)
   }
  
@@ -41,17 +40,15 @@ export class BookService {
   }
   getBookById(BookId:string):Observable<any>{
     const url = `${this.baseUrl}/${BookId}`;
-    console.log("attempting to get book by id")
     return this.http.get<any>(url);
   }
   updateBook(BookId:string,book:Book):Observable<any>{
     const url = `${this.baseUrl}/${BookId}`;
-    console.log("attempting to update book by id")
+
     return this.http.put<any>(url,book)
   }
   deleteBook(BookId:string,book:Book):Observable<any>{
     const url = `${this.baseUrl}/${BookId}`;
-    console.log("attempting to delete book by id")
     return this.http.delete<any>(url)
   }
 }

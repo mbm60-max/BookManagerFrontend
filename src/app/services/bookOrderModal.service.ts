@@ -12,6 +12,7 @@ import { Subject } from 'rxjs';
 })
 export class BookOrderModalService {
     private orderUpdatedSubject = new Subject<BookOrder[]>();
+    private orderResponse:any;
     orderUpdated$ = this.orderUpdatedSubject.asObservable();
   constructor(private dialog: MatDialog, private orderService: OrderService) { }
     private userId:string="";
@@ -23,20 +24,18 @@ export class BookOrderModalService {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-        if (result) {
-            console.log("should be trying to update order on changre",result)
-          // Call a method to update the book list in the parent component
-          this.orderService.updateOrderById(this.userId, result).subscribe(
-            result => {
-              console.log('Order updated:',  reindex(result));
-            },
-            error => {
-              console.error('Error order book:', error);
-            }
-          );
-          this.orderUpdatedSubject.next(reindex(result));
-        }
-      });
+      if (result) {
+        // Call a method to update the book list in the parent component
+        this.orderService.updateOrderById(this.userId, result).subscribe(
+          x => {
+            this.orderUpdatedSubject.next(reindex(result));
+          },
+          error => {
+            console.error('Error updating order:', error);
+          }
+        );
+      }
+    });
+    
   }
 }
