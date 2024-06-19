@@ -29,11 +29,12 @@ export class NoteService {
     });
   
     const updatedNote = {
-      Content: newContent
+      content: newContent
     };
   
     return this.http.put<any>(url, updatedNote, { headers });
   }
+  
   
   deleteNote(NoteId:string):Observable<any>{
     const url = `${this.baseUrl}/${NoteId}`;

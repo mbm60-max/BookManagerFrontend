@@ -83,10 +83,23 @@ export class HomeComponent implements OnInit {
       this.getOrder();
        // Subscribe to the bookUpdated$ observable
        this.bookEditService.bookUpdated$.subscribe(updatedBook => {
-        const index = this.books.findIndex(book => book.id === updatedBook.id);
-        if (index !== -1) {
-          // Replace the old book data with the updated book data
-          this.books[index] = updatedBook;
+        const indexBook = this.books.findIndex(book => book.id === updatedBook.id);
+        const indexOrder = this.books.findIndex(book => book.id === updatedBook.id);
+        if (indexBook !== -1 && indexOrder !== -1) {
+          // Replace the old book data with the updated book data in the frontend and in order
+          this.books[indexBook] = updatedBook;
+          let updatedOrder =this.bookOrders;
+          let orderToEdit = updatedOrder[indexOrder];
+          orderToEdit.name = updatedBook.name;
+          this.bookOrders[indexOrder] = orderToEdit;
+          this.orderService.updateOrderById(this.authStatus.id, this.bookOrders).subscribe(
+            x => {
+             console.log("updated",this.bookOrders)
+            },
+            error => {
+              console.error('Error updating order:', error);
+            }
+          );
         }
       });
       this.bookCreateService.bookCreated$.subscribe(newBook => {
