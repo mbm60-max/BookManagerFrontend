@@ -1,0 +1,28 @@
+<h1>Add Book</h1>
+<form (ngSubmit)="onSubmit()">
+  <div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" [(ngModel)]="data.name" name="name">
+  </div>
+  <div>
+    <label for="author">Author:</label>
+    <input type="text" id="author" [(ngModel)]="data.author" name="author">
+  </div>
+  <div>
+    <label for="pagesRead">Pages Read:</label>
+    <input type="number" id="pagesRead" [(ngModel)]="data.pagesRead" name="pagesRead">
+  </div>
+  <div>
+    <label for="totalPages">Total Pages:</label>
+    <input type="number" id="totalPages" [(ngModel)]="data.totalPages" name="totalPages">
+  </div>
+  <div>
+    <label for="imageRef">Image Reference:</label>
+    <input type="text" id="imageRef" [(ngModel)]="data.imageRef" name="imageRef">
+  </div>
+  <!-- Add more fields for other book properties as needed -->
+  <div>
+    <button type="submit">Submit</button>
+    <button type="button" (click)="onClose()">Cancel</button>
+  </div>
+</form>

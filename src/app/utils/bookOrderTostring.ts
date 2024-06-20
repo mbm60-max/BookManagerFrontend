@@ -31,5 +31,28 @@ import { BookOrder } from "../component/home/home.component";
       index: newIndex
     }));
   }
-  export { convertToOrderedString, removeAndReindex,reindex };
+  function getSuffix(date: number): string {
+    if (date >= 11 && date <= 13) {
+      return 'th';
+    }
+    switch (date % 10) {
+      case 1:
+        return 'st';
+      case 2:
+        return 'nd';
+      case 3:
+        return 'rd';
+      default:
+        return 'th';
+    }
+  }
+  
+  function formatDate(date: Date): string {
+    const day = date.getDate();
+    const month = date.toLocaleString('en-US', { month: 'long' });
+    const year = date.getFullYear();
+    const suffix = getSuffix(day);
+    return `${day}${suffix} ${month} ${year}`;
+  }
+  export { convertToOrderedString, removeAndReindex,reindex,getSuffix,formatDate };
   

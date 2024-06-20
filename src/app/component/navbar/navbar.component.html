@@ -17,16 +17,15 @@
   <div class="navbar-container-right">
     <mat-grid-list cols="4" rowHeight="100px">
       <mat-grid-tile *ngFor="let tile of tilesRight" [colspan]="tile.cols" [rowspan]="tile.rows">
-        <ng-container *ngIf="tile.text === 'Logout'; else loginLink">
-          <button class="navbar-button" (click)="logout()">
-            <span class="navbar-text">{{ tile.text }}</span>
-          </button>
-        </ng-container>
-        <ng-template #loginLink>
-          <button class="navbar-button">
-            <a class="navbar-text" [routerLink]="tile.link">{{ tile.text }}</a>
-          </button>
-        </ng-template>
+        <div class="navbar-container-right">
+          <mat-grid-list cols="4" rowHeight="100px">
+            <mat-grid-tile *ngFor="let tile of tilesRight" [colspan]="tile.cols" [rowspan]="tile.rows">
+              <button mat-fab aria-label="Example icon button" (click)="performAction(tile.method)">
+                <mat-icon>{{ tile.text }}</mat-icon>
+              </button>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </div>
       </mat-grid-tile>
     </mat-grid-list>
   </div>

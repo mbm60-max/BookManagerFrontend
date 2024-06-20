@@ -1,21 +1,36 @@
-import {Component, OnInit} from '@angular/core';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { NgForOf, NgIf } from '@angular/common';
-import { AuthProps, AuthService } from '../../services/auth.service';
-  
-  export interface Tile {
-    cols: number;
-    rows: number;
-    text: string;
-    link:string;
-  }
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { AuthService, AuthProps } from '../../services/auth.service';
+import { NavbarService } from '../../services/navbar.service';
+
+export interface Tile {
+  cols: number;
+  rows: number;
+  text: string;
+  link: string;
+  method: string; 
+}
+
+
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [MatGridListModule,RouterLink,NgForOf,NgIf],
+  imports: [
+    MatGridListModule,
+    RouterLink,
+    NgForOf,
+    NgIf,
+    MatCardModule,
+    MatIconModule,
+    MatButtonModule
+  ],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss'
+  styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
   authStatus: AuthProps = {
@@ -28,31 +43,55 @@ export class NavbarComponent implements OnInit {
   tilesLeft: Tile[] = [];
   tilesRight: Tile[] = [];
 
-  constructor(private authService: AuthService, private router: Router) {
-    this.updateTiles(); // Initially update tiles
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private navbarService: NavbarService
+  ) {
+    this.updateTiles();
   }
-  
+
   ngOnInit() {
     this.authStatus = this.authService.getStatus();
-    this.updateTiles(); 
+    this.updateTiles();
+  }
 
-  }
   updateTiles() {
-    this.tilesLeft = [
-      { text: 'HOME', cols: 2, rows: 1,link: '/home' },
-      {text: 'RULES', cols: 2, rows: 1,link: '/home' },
+    this.tilesLeft = [];
+    this.tilesRight = [
+      { text: 'add', cols: 1, rows: 1, link: '', method: 'createBook' },
+      { text: 'edit', cols: 1, rows: 1, link: '', method: 'editOrder' },
+      { text: 'logout', cols: 1, rows: 1, link: '/login', method: 'logout' }
     ];
-    this.tilesRight =[
-      { text: this.authStatus.isLoggedIn ? 'LOGOUT' : 'LOGIN', cols: 4, rows: 1,link: '/login' }
-    ]
   }
- 
+  performAction(method: string) {
+    switch (method) {
+      case 'logout':
+        this.logout();
+        break;
+      case 'createBook':
+        this.createBook();
+        break;
+      case 'editOrder':
+        this.editOrder();
+        break;
+      default:
+        console.error(`Method '${method}' not implemented.`);
+        break;
+    }
+  }
 
   logout() {
-    //replace with auth service method to signout
-    this.authService.setAuth({email: '',
-    name: '',
-    id: '',
-    isLoggedIn: false})
+    console.log("logging out")
+    this.authService.setAuth({ email: '', name: '', id: '', isLoggedIn: false });
+    this.router.navigate(['/login']);
+  }
+
+  createBook() {
+    this.navbarService.notifyBookAdded();
+  }
+
+  editOrder() {
+    this.navbarService.notifyOrderChanged();
   }
 }

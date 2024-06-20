@@ -5,6 +5,7 @@ import { BookEditModal } from '../component/editModal/bookEditModal';
 import { BookOrder, BookTile } from '../component/home/home.component';
 import { Subject } from 'rxjs';
 import { OrderService } from './order.service';
+import { BookCreateModal } from '../component/createModal/bookCreateModal';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class BookCreateModalService {
 
   openBookCreateModal(ownerId:string,bookOrder:BookOrder[]): void {
     const bookData={name:"No Name",author:"No Author",pagesRead:0,totalPages:0,imageRef:"No Image"}
-    const dialogRef = this.dialog.open(BookEditModal, {
+    const dialogRef = this.dialog.open(BookCreateModal, {
       width: '250px',
       data: { ...bookData } // Pass the book data to the modal
     });

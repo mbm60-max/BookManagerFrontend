@@ -12,7 +12,11 @@ import { BookDeleteModalService } from '../../services/bookDelete.service';
 import { Note, NoteService } from '../../services/noteService';
 import { BookOrderModalService } from '../../services/bookOrderModal.service';
 import { OrderService } from '../../services/order.service';
-import { convertToOrderedString, removeAndReindex } from '../../utils/bookOrderTostring';
+import { convertToOrderedString, formatDate, removeAndReindex } from '../../utils/bookOrderTostring';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { NavbarService } from '../../services/navbar.service';
 
 export interface BookTile {
   id:string;
@@ -36,7 +40,7 @@ export interface BookOrder{
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatGridListModule,NgForOf,NgIf,NavbarComponent,RouterLink],
+  imports: [MatGridListModule,NgForOf,NgIf,NavbarComponent,RouterLink,MatIconModule,MatCardModule, MatButtonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -50,7 +54,10 @@ export class HomeComponent implements OnInit {
   books:BookTile[]=[];
   errorMessage:string="";
   bookOrders:BookOrder[] = [];
-  constructor(private authService: AuthService, private router: Router,private bookService:BookService,private bookEditService:BookEditModalService,private bookCreateService:BookCreateModalService,private bookDeleteService:BookDeleteModalService,private noteService:NoteService,private bookOrderService:BookOrderModalService,private orderService:OrderService) {
+  currentDate = new Date();
+  formattedDate="";
+  constructor(private authService: AuthService, private router: Router,private bookService:BookService,private bookEditService:BookEditModalService,private bookCreateService:BookCreateModalService,private bookDeleteService:BookDeleteModalService,private noteService:NoteService,private bookOrderService:BookOrderModalService,private orderService:OrderService,private navbarService:NavbarService) {
+    this.formattedDate = formatDate(this.currentDate);
   }
   updateBookList(): void {
   
@@ -59,8 +66,8 @@ export class HomeComponent implements OnInit {
         console.log('called upate books with arguments',response)
         this.books = response.map((book: { cols: number; rows: number; }) => {
           // Assign arbitrary values to cols and rows properties
-          book.cols = 2 // Random number between 1 and 5 for cols
-          book.rows = 2; // Random number between 1 and 3 for rows
+          book.cols = 3 // Random number between 1 and 5 for cols
+          book.rows = 3; // Random number between 1 and 3 for rows
           return book;
         });
         this.books = response;
@@ -119,6 +126,14 @@ export class HomeComponent implements OnInit {
         this.updateBookList();
       })
       this.getOrder();
+      
+      this.navbarService.bookAdded$.subscribe(() => {
+        this.createBook();
+      });
+  
+      this.navbarService.orderChanged$.subscribe(() => {
+        this.editOrder(this.bookOrders);
+      });
     }
   }
   
@@ -134,6 +149,10 @@ export class HomeComponent implements OnInit {
   }
   editOrder(bookOrders:BookOrder []){
     this.bookOrderService.openBookOrderModal(this.authStatus.id,bookOrders);
+  }
+  viewNotes(bookId:string){
+    console.log("here")
+    this.router.navigate(['/notes', bookId]);
   }
   parseBookOrders(order:any):BookOrder[]{
     const bookOrders:BookOrder []=[];
