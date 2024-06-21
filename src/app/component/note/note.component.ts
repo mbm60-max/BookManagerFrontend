@@ -5,6 +5,11 @@ import { FormsModule } from '@angular/forms'; // Import FormsModule here
 import { CommonModule } from '@angular/common';
 import { MarkdownModule, MarkdownService } from 'ngx-markdown';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { BookService } from '../../services/book.service';
+import { BookTile } from '../home/home.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 export interface Note {
   id: string;
   content: string;
@@ -24,6 +29,7 @@ export interface UpdatedNote{
     MarkdownModule,
     NavbarComponent,
     RouterLink,
+    MatIconModule,MatCardModule, MatButtonModule
 ]
 })
 export class NoteComponent implements OnInit {
@@ -32,8 +38,20 @@ export class NoteComponent implements OnInit {
   editedContent: string = '';
   previousContent:string='';
   noteId: string | null = '';
-
-  constructor(private route: ActivatedRoute, private noteService: NoteService,private cdr: ChangeDetectorRef,private markdownService: MarkdownService) {}
+  book:BookTile={
+    id: '',
+    cols: 0,
+    rows: 0,
+    text: '',
+    link: '',
+    name: '',
+    totalPages: 0,
+    pagesRead: 0,
+    imageRef: '',
+    ownerId: '',
+    author: ''
+  };
+  constructor(private route: ActivatedRoute, private noteService: NoteService,private cdr: ChangeDetectorRef,private markdownService: MarkdownService,private bookService: BookService) {}
 
   ngOnInit() {
     this.noteId = this.route.snapshot.paramMap.get('id');
@@ -41,7 +59,6 @@ export class NoteComponent implements OnInit {
       this.noteService.getNoteById(this.noteId).subscribe(
         (note) => {
           this.note = note;
-          console.log(note);
           this.editedContent = note.content;
           this.previousContent = note.content;
           this.markdownService.reload();
@@ -51,6 +68,11 @@ export class NoteComponent implements OnInit {
           console.error('Error fetching note:', error);
         }
       );
+      this.bookService.getBookById(this.noteId).subscribe(
+        (book)=>{
+          this.book = book;
+        }
+      )
     } else {
       console.log('No note id in query so could not return a result');
     }
@@ -62,6 +84,13 @@ export class NoteComponent implements OnInit {
 cancel(){
     this.note.content = this.previousContent;
     this.toggleEditMode();
+}
+calculateProgressWidth(){
+  if( this.book.pagesRead > this.book.totalPages){
+    return 100
+  }else{
+    return (this.book.pagesRead / this.book.totalPages)*100
+  }
 }
   saveNote() {
     this.previousContent=this.note.content;

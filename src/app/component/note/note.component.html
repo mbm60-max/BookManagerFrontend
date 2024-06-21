@@ -1,15 +1,48 @@
-<button>  <a class="navbar-text" [routerLink]="['/home']">Home</a></button>
-<h1>Welcome to the notes page</h1>
+<div class="page">
+  <div class="header">
+    <div class="header-content">
+        <p class="title">{{book.name}} Notes</p>
+        <div class="shift">
+          <div class="spice-display-container">
+            <span class="spice-label">Pages Read</span>
+            <div class="spice-bar">
+              <div class="spice-bar-inner" [style.width.%]="calculateProgressWidth()">
+                <span class="spice-text">{{book.pagesRead}}/{{book.totalPages}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="line"></div>
+   
+  </div>
+  <div class="body-container">
+    <div class="body">
+      <div *ngIf="editMode">
+        <textarea class="text-area" [(ngModel)]="note.content" rows="10" cols="30"></textarea>
+      </div>
+      
+      <div  *ngIf="!editMode">
+          <markdown  class="text-area" *ngIf="note.content">
+              {{note.content}}
+            </markdown>
+      </div>
+    </div>
+    
+    <div class="button-container">
+      <div *ngIf="editMode" >
+       
+        <button class="button"mat-fab>  <a class="navbar-text" [routerLink]="['/home']"><mat-icon>home</mat-icon> </a></button>
+        <button class="button" mat-fab (click)="toggleEditMode()"> <mat-icon>edit</mat-icon></button>
+        <button class="button" mat-fab  (click)="saveNote()"><mat-icon>download</mat-icon></button>
+        <button class="button" mat-fab  (click)="cancel()"><mat-icon>cancel</mat-icon></button>
+      </div>
+      <div *ngIf="!editMode" >
+        
+        <button class="button"mat-fab>  <a class="navbar-text" [routerLink]="['/home']"><mat-icon>home</mat-icon> </a></button>
+        <button class="button" mat-fab (click)="toggleEditMode()"> <mat-icon>edit</mat-icon></button>
+      </div>
 
-<div *ngIf="editMode">
-  <textarea [(ngModel)]="note.content" rows="10" cols="30"></textarea>
-  <button (click)="saveNote()">Save</button>
-  <button (click)="cancel()">Cancel</button>
-</div>
-
-<div *ngIf="!editMode">
-    <markdown *ngIf="note.content">
-        {{note.content}}
-      </markdown>
-  <button (click)="toggleEditMode()">Edit</button>
+    
+  </div>
 </div>

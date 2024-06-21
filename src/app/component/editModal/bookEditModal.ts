@@ -1,6 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @Component({
@@ -8,7 +10,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-book-edit-modal',
   templateUrl: './bookEditModal.html',
   styleUrls: ['./bookEditModal.scss'],
-  imports:[FormsModule],
+  imports:[FormsModule,MatIconModule,MatButtonModule],
 })
 export class BookEditModal {
   constructor(
@@ -17,6 +19,7 @@ export class BookEditModal {
   ) { }
 
   onSubmit(): void {
+    console.log("clicked edit")
     this.dialogRef.close(this.data);
   }
 

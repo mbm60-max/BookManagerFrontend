@@ -39,14 +39,13 @@
 .banner{
     width:100%;
     height:10vh;
-    font-size: 1.5em;
-    font-weight: Bold;
 }
 .booksBody{
     height:90vh;
     display: flex;
     width:100%;
     flex-direction: column;
+    
 }
 .body{
     width:100%;
@@ -55,14 +54,58 @@
     flex-direction: column;
 }
 .body4th{
-    width:100%;
+    width:95%;
     height:25%;
+    margin-left:1.5em;
+    display: flex;
+    justify-content: center;
+}
+.body15{
+  width:95%;
+  height:15%;
+  min-height: 150px;
+  margin-left:1.5em;
+  display: flex;
+  justify-content: center;
+}
+.button-container{
+  display: flex;
+  justify-content: end;
+}
+.nav-buttonx{
+  width:33px;
+  margin:2px;
+  height:33px;
+  margin-top: 1em;
+  border-radius: 15px!important;
+  z-index: 1!important;
+  }
+.body60{
+  width:95%;
+  height:60%;
+  margin-left:1.5em;
+  display: flex;
+  justify-content: center;
 }
 
 .up{
-    z-index: 100!important;
+    z-index: 1!important;
 }
+.c-and-q{
+  width:95%;
+  height:60%;
+  margin-left:1.5em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.c-and-q-button{
+  width:45%;
+margin-right: 1.5em;
+margin-top: 1em;
+z-index: 1!important;
 
+}
   
   .example-header-image {
     background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
@@ -71,14 +114,17 @@
 
   }
   .book-image{
-    height: 100px;
-    width:50px;
+    height: 70%;
+    max-height: 120px;
+    width:100%;
   }
   .book-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 8px;
    height:100%;
+   min-height: 500px;
+   margin-top: 100px;
     overflow: auto; /* Enable vertical scrolling */
   }
   
@@ -92,21 +138,70 @@
   .example-card {
     width: 70%;
     height:80%;
-    max-height: 400px;
+max-width: 300px;
+min-width: 100px;
+min-height: 250px;
+
+  }
+  .l15{
+    margin-left: 15px;
+  }
+  .example-card-big {
+    width: 90%;
+    height:100%;
+max-width: 400px;
+min-width: 100px;
+min-height: 400px;
+
   }
   
+  .book-image-big{
+    height: 70%;
+    max-height: 250px;
+    width:100%;
+  }
+
+  .bodyHalf{
+    width:95%;
+    height:50%;
+    background-color: green;
+    margin-left:1.5em;
+    display: flex;
+    justify-content: center;
+  }
+  .calendar{
+    width:80%;
+    height:10px;
+  }
+  .current-book{
+    width:80%;
+    height:10px;
+  }
   @media (max-width: 200px) {
     .book-grid {
       grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     }
   }
-  .book-title{
-    max-height:30px;
-    overflow: scroll;
+  .book-title {
+    font-size: 1em;
+    font-weight: bold;
+max-height: 30px;
+overflow: ellipse;
+
+}
+  .header{
+    width: 90%;
+  }
+  .text{
+    font-size: 0.9em;
   }
   .book-sub-title{
-    max-height:30px;
-    overflow: scroll;
+    height: 30px;
+    font-size: 1em;
+    font-weight: bold;
+    overflow: hidden; /* Hide the overflowing content */
+    text-overflow: ellipsis; /* Show ellipsis (...) for overflowing text */
+    white-space: nowrap;
   }
   .sign-in{
     font-size: 1.5em;
@@ -117,4 +212,70 @@
     height:100%
   }
 
+  .banner-text{
+    font-size: 1.5em;
+    font-weight: Bold;
+    margin-top: 1.5em;
+    margin-left:1.5em;
+    overflow: hidden;
+    max-height: 23px;
+  }
+  .line{
+    width:95%;
+    height:3px;
+    background-color: black;
+    margin-top: 0.5em;
+    margin-left:1.5em;
+  }
+  .spice-display-container {
+    display: flex;
+    flex-direction: column;
+margin-top: 4em;
+width: 80%;
+height:100%;
+min-height: 150px;
+max-width: 380px;
+  }
   
+  .spice-bar {
+    height: 15px;
+    z-index: 4;
+    width:100%;
+    max-width: 400px;
+    height: 25px;
+    background-color: rgb(210, 244, 255);
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  
+  .spice-bar-inner {
+  z-index:5;
+    height: 25px;
+    width:100%;
+    background: linear-gradient(to right, 
+    rgb(35, 35, 35) 0%,     /* Start color at 0% */
+    rgb(30, 34, 35) 50%,  /* Color change at 50% */
+    rgb(7, 21, 24) 100%   /* End color at 100% */
+    );
+    border-radius: 5px;
+    text-align: right;
+  }
+  .spice-label {
+    color: black;
+    left: 0; /* Position on the left */
+    margin-left: 10px;
+    font-size: em;
+    margin-bottom: 5px;
+  }
+  .spice-label, .spice-text {
+    height: 100%; /* Ensure full height */
+    display: flex;
+    align-items:center; /* Vertically center text */
+    height: 25px;
+  }
+  
+  .spice-text {
+    color: white;
+    font-family: "Archivo";
+    font-size: 1em;
+  }

@@ -26,7 +26,8 @@ export class BookDeleteModalService {
     this.userId=userId;
     this.books=books;
     const dialogRef = this.dialog.open(BookDeleteModal, {
-      width: '250px',
+        width: '400px',
+        height:'300px',
       data: { ...bookData } // Pass the book data to the modal
     });
 

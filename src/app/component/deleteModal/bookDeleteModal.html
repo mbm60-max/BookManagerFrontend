@@ -1,6 +1,16 @@
-<div>
-    <h1>Are you sure you want to delete {{data.name}}</h1>
-    <p>Once you confirm you cannot undo this action</p>
-    <button (click)="onSubmit()">Confirm</button>
-    <button (click)="onClose()">Exit</button>
-</div>
+<div class="modal-container">
+    <div class="shift">
+      <div class="header">
+        <p class="title">Delete Book</p>
+        <div class="button-container">
+          <button class="button" mat-fab type="submit"><mat-icon>check_circle</mat-icon></button>
+            <button  class="button" mat-fab type="button" (click)="onClose()"><mat-icon>cancel</mat-icon></button>
+        </div>
+      </div>
+      <div>
+        <p class="text">Are you sure you want to delete the book,  {{data.name}}.</p>
+        <p class="text">Once you confirm you cannot undo this action.</p>
+        <p class="text">This will remove it from your order and delete the book notes permanently !</p>
+    </div>
+    </div>
+    </div>

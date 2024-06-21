@@ -1,31 +1,36 @@
 <div class="navbar-container-left">
-    <mat-grid-list cols="6" rowHeight="100px">
-      <mat-grid-tile *ngFor="let tile of tilesLeft" [colspan]="tile.cols" [rowspan]="tile.rows">
-        <ng-container *ngIf="tile.text === 'Logout'; else loginLink">
-          <button class="navbar-button" (click)="logout()">
-            <span class="navbar-text">{{ tile.text }}</span>
+  <mat-grid-list cols="6" rowHeight="100px">
+    <mat-grid-tile *ngFor="let tile of tilesLeft" [colspan]="tile.cols" [rowspan]="tile.rows">
+      <ng-container *ngIf="tile.text === 'Logout'; else loginLink">
+        <button class="navbar-button" (click)="logout()">
+          <span class="navbar-text">{{ tile.text }}</span>
+        </button>
+      </ng-container>
+      <ng-template #loginLink>
+        <button class="navbar-button">
+          <a class="navbar-text" [routerLink]="tile.link">{{ tile.text }}</a>
+        </button>
+      </ng-template>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+
+<div class="navbar-container-right">
+  <ng-container *ngIf="!isSmallScreen; else menuIcon">
+      <div *ngFor="let tile of tilesRight" class="tile">
+          <button  class="nav-button" mat-fab aria-label="Example icon button" (click)="performAction(tile.method)">
+              <mat-icon>{{ tile.text }}</mat-icon>
           </button>
-        </ng-container>
-        <ng-template #loginLink>
-          <button class="navbar-button">
-            <a class="navbar-text" [routerLink]="tile.link">{{ tile.text }}</a>
-          </button>
-        </ng-template>
-      </mat-grid-tile>
-    </mat-grid-list>
-  </div>
-  <div class="navbar-container-right">
-    <mat-grid-list cols="4" rowHeight="100px">
-      <mat-grid-tile *ngFor="let tile of tilesRight" [colspan]="tile.cols" [rowspan]="tile.rows">
-        <div class="navbar-container-right">
-          <mat-grid-list cols="4" rowHeight="100px">
-            <mat-grid-tile *ngFor="let tile of tilesRight" [colspan]="tile.cols" [rowspan]="tile.rows">
-              <button mat-fab aria-label="Example icon button" (click)="performAction(tile.method)">
-                <mat-icon>{{ tile.text }}</mat-icon>
-              </button>
-            </mat-grid-tile>
-          </mat-grid-list>
-        </div>
-      </mat-grid-tile>
-    </mat-grid-list>
-  </div>
+      </div>
+  </ng-container>
+  <ng-template #menuIcon>
+    <button class="nav-button" mat-fab (click)="toggleMenu()">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <div class="menu" *ngIf="menuOpen">
+        <button class="nav-buttonx" mat-fab *ngFor="let tile of tilesRight" (click)="performAction(tile.method)">
+            <mat-icon>{{ tile.text }}</mat-icon>
+        </button>
+    </div>
+</ng-template>
+</div>

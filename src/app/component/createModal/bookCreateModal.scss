@@ -1,0 +1,55 @@
+.modal-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #e0e0ff;
+}
+.shift{
+    margin-left: 1.5em;
+}
+.header{
+display: flex;
+flex-direction:row;
+margin-top:5px;
+margin-bottom: 5px;
+}
+.input-label{
+margin-right: 1em;
+font-size: 1em;
+margin-bottom: 1em;
+min-width: 100px;
+width:15%;
+}
+.input-container{
+display: flex;
+flex-direction: row;
+}
+.input-box {
+    margin-bottom: 1em;
+    font-size: 1em;
+    border: none; /* Remove all borders */
+    background-color: #e0e0ff;
+    color: black;
+    border-bottom: 1.5px solid white; /* Thick white bottom border */
+}
+.button{
+background-color: white;
+width:45px;
+margin:5px;
+height:45px;
+margin-top: 1em;
+border-radius: 15px!important;
+z-index: 1!important;
+}
+.button-container{
+    width:80%;
+    display: flex;
+    justify-content: end;
+}
+.title{
+    margin-top: 1.5em;
+   font-size: 1.5em;
+   font-weight: bold;
+   width:100%;
+}

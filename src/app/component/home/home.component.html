@@ -2,16 +2,25 @@
   <div class="container">
       <!-- Show login view if user is not logged in -->
       <div *ngIf="!authStatus.isLoggedIn" class="currentBookContainer">
-        <div class="banner">{{formattedDate}}</div>
+        <div class="banner"><div class="banner-text">{{formattedDate}}</div>
+        <div class="line"></div>
+      </div>
         <div class="body">
-          <div class="body4th"><p>Welcome please login</p></div>
-          <div class="body4th"><p>Welcome please login</p></div>
-          <div class="body4th"><p>Welcome please login</p></div>
-          <div class="body4th"><p>Welcome please login</p></div>
+          <div class="body4th">
+            <div class="book-progress"></div>
+          </div>
+          <div class="bodyHalf">
+            <div class="current-book"></div>
+          </div>
+          <div class="body4th">
+            <div class="calendar"></div>
+          </div>
         </div>  
       </div> 
       <div *ngIf="!authStatus.isLoggedIn" class="booksContainer">
-        <div class="banner">Your Collection</div>
+        <div class="banner"><div class="banner-text">Your Collection</div>
+        <div class="line"></div>
+      </div>
         <div class="booksBody">
           <div class="sign-in">
           <p>Your are currently not logged in</p>
@@ -20,16 +29,49 @@
       </div> 
       <!-- Show logged-in view if user is logged in -->
       <div *ngIf="authStatus.isLoggedIn" class="currentBookContainer">
-        <div class="banner">{{formattedDate}}</div>
-        <div class="body">
-          <div class="body4th"><p>Welcome please login</p></div>
-          <div class="body4th"><p>Welcome please login</p></div>
-          <div class="body4th"><p>Welcome please login</p></div>
-          <div class="body4th"><p>Welcome please login</p></div>
-        </div>  
+        <div class="banner"><div class="banner-text">{{formattedDate}}</div>
+      <div class="line"></div>
+      </div>
+      <div class="body">
+        <div class="body15">
+          <div class="spice-display-container">
+            <span class="spice-label">Pages Read</span>
+            <div class="spice-bar">
+              <div class="spice-bar-inner" [style.width.%]="pagesRead > totalPages ? 100 : (pagesRead /totalPages)*100">
+                <span class="spice-text">{{ pagesRead }}/{{ totalPages }}</span>
+              </div>
+          </div>
+            </div>
+        </div>
+        <div class="body60">
+         
+            <mat-card class="example-card-big" appearance="outlined">
+              <mat-card-header class="header">
+                <mat-card-title class="book-title">The Hunger Games - Suzanne Collins</mat-card-title>
+              </mat-card-header>
+              <img class="book-image-big" mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+              <mat-card-actions class="button-container">
+                <button class="nav-buttonx" mat-fab (click)="editBook(todaysBook)" > <mat-icon>edit</mat-icon></button>
+                <button class="nav-buttonx" mat-fab (click)="deleteBook(todaysBook)" > <mat-icon>delete</mat-icon></button>
+                <button class="nav-buttonx" mat-fab  (click)="viewNotes(todaysBook.id)"> <mat-icon>notes</mat-icon></button>
+              </mat-card-actions>
+              <mat-card-content class="text">
+            Your goal is read 10 pages, do the quiz and update your notes.
+              </mat-card-content>
+            </mat-card>
+       
+        </div>
+        <div class="body4th">
+          <div class="c-and-q">
+            <button mat-fab class="c-and-q-button" ><mat-icon>date_range</mat-icon></button>
+            <button mat-fab class="c-and-q-button"><mat-icon>help_outline</mat-icon></button>
+          </div>
+        </div>
+      </div>
       </div> 
       <div *ngIf="authStatus.isLoggedIn" class="booksContainer">
-        <div class="banner">Your Collection
+        <div class="banner"><div class="banner-text">Your Collection</div>
+        <div class="line"></div>
         </div>
         <div class="booksBody">
           <p *ngIf="errorMessage">{{ errorMessage }}</p>
@@ -38,20 +80,17 @@
             <div *ngFor="let book of books" class="book-item">
               <mat-card class="example-card" appearance="outlined">
                 <mat-card-header>
-                  <mat-card-title class="book-title">{{book.name}}</mat-card-title>
-                  <mat-card-subtitle class="book-sub-title">{{book.pagesRead}}/{{book.totalPages}}</mat-card-subtitle>
-                  <mat-card-subtitle class="book-title">{{book.author}}</mat-card-subtitle>
+                  <mat-card-title class="book-title">{{book.name}} - {{book.author}}</mat-card-title>
                 </mat-card-header>
                 <img class="book-image" mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-                <mat-card-content>
-               hi
-                </mat-card-content>
-                <mat-card-actions>
-                  <button mat-button (click)="editBook(book)">Edit</button>
-                  <button mat-button (click)="deleteBook(book)">Delete</button>
-                  <button mat-button (click)="viewNotes(book.id)">notes</button>
+                <mat-card-actions class="button-container">
+                  <button  class="nav-buttonx" mat-fab (click)="editBook(book)"><mat-icon>edit</mat-icon></button>
+                  <button  class="nav-buttonx" mat-fab (click)="deleteBook(book)"><mat-icon>delete</mat-icon></button>
+                  <button  class="nav-buttonx" mat-fab (click)="viewNotes(book.id)"><mat-icon>notes</mat-icon></button>
                 </mat-card-actions>
+                <div class="l15"><mat-card-subtitle class="text">{{book.pagesRead}}/{{book.totalPages}} Pages Read</mat-card-subtitle></div>
               </mat-card>
+              
             </div>
           </div>
           

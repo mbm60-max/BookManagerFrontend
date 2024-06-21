@@ -15,7 +15,8 @@ export class BookEditModalService {
 
   openBookEditModal(bookData: any): void {
     const dialogRef = this.dialog.open(BookEditModal, {
-      width: '250px',
+      width: '400px',
+      height:'300px',
       data: { ...bookData } // Pass the book data to the modal
     });
 

@@ -21,7 +21,8 @@ export class BookCreateModalService {
   openBookCreateModal(ownerId:string,bookOrder:BookOrder[]): void {
     const bookData={name:"No Name",author:"No Author",pagesRead:0,totalPages:0,imageRef:"No Image"}
     const dialogRef = this.dialog.open(BookCreateModal, {
-      width: '250px',
+      width: '400px',
+      height:'300px',
       data: { ...bookData } // Pass the book data to the modal
     });
 

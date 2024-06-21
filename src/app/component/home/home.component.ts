@@ -18,6 +18,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { NavbarService } from '../../services/navbar.service';
 
+
 export interface BookTile {
   id:string;
   cols: number;
@@ -52,9 +53,24 @@ export class HomeComponent implements OnInit {
     isLoggedIn: true,
   };
   books:BookTile[]=[];
+  todaysBook:BookTile={
+    id: '1b0c5265-aa8b-4275-bf6a-1eaf5f718eb9',
+    cols: 0,
+    rows: 0,
+    text: 'blah',
+    link: 'blah',
+    name: 'No Name',
+    totalPages: 0,
+    pagesRead: 0,
+    imageRef: '',
+    ownerId: '5107dcfa-eef7-4081-aed3-9be67b28fa2f',
+    author: 'No Author'
+  };
   errorMessage:string="";
   bookOrders:BookOrder[] = [];
   currentDate = new Date();
+  pagesRead:number=20;
+  totalPages:number=30;
   formattedDate="";
   constructor(private authService: AuthService, private router: Router,private bookService:BookService,private bookEditService:BookEditModalService,private bookCreateService:BookCreateModalService,private bookDeleteService:BookDeleteModalService,private noteService:NoteService,private bookOrderService:BookOrderModalService,private orderService:OrderService,private navbarService:NavbarService) {
     this.formattedDate = formatDate(this.currentDate);

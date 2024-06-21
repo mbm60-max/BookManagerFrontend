@@ -19,7 +19,8 @@ export class BookOrderModalService {
   openBookOrderModal(userId:string,bookOrders:BookOrder []): void {
     this.userId =userId;
     const dialogRef = this.dialog.open(BookOrderModal, {
-      width: '250px',
+      width: '400px',
+      height:'300px',
       data: { ...bookOrders } 
     });
 
