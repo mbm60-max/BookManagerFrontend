@@ -132,8 +132,6 @@ export class CalendarService {
             console.log("error no books to use in order");
         }
     }
-    
-    
     console.log("First attempt days",this.days);
     return this.days;
   }

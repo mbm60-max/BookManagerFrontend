@@ -1,0 +1,26 @@
+
+<div class="page">
+    <div class="header">
+      <div class="header-content">
+          <p class="title">{{getFirstDay(weekIndex)}} - {{getLastDay(lastDayIndex,weekIndex)}}  </p>
+          <button [disabled]="!canGoBack" mat-fab (click)="goBackward2Weeks()"><mat-icon>chevron_left</mat-icon></button>
+          <button [disabled]="!canGoForward" mat-fab (click)="goForward2Weeks()"><mat-icon>chevron_right</mat-icon></button>
+          </div>
+      </div>
+      <div class="line"></div>
+      <div class="body-container">
+        <div class="body">
+            <div class="week-container">
+                <div class="week" *ngFor="let week of weeks">
+                    <div class="day" *ngFor="let day of week">
+                        {{ day.dateString || '' }}
+                        {{day.bookToReadId}}
+                        {{day.bookToReadName}}
+                        {{day.month}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    

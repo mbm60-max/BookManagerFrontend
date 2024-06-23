@@ -7,12 +7,15 @@ import { BookOrder, BookTile } from '../home/home.component';
 import { OrderService } from '../../services/order.service';
 import { BookService } from '../../services/book.service';
 import { CalendarService } from '../../services/calendar.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 export interface CalendarTile{
     dateString:string;
     bookToReadId:string;
     bookToReadName:string;
-    month:Months;
+    month:Months|null;
 }
 export enum Months {
     January = "January",
@@ -26,12 +29,13 @@ export enum Months {
     September = "September",
     October = "October",
     November = "November",
-    December = "December"
+    December = "December",
+    None="None"
 }
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule,RouterModule],
+  imports: [CommonModule,ReactiveFormsModule,RouterModule,MatIconModule,MatCardModule, MatButtonModule],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.scss'
 })
@@ -42,24 +46,105 @@ export class CalendarComponent implements OnInit {
   userId: string | null = '';
   currentMonth:Months|null=null;
   days:CalendarTile[]=[];
+  weeks: CalendarTile[][] = [];
+  year:number|null = null;
+  weekIndex:number=0;
+  firstDayIndex:number=0;
+  lastDayIndex:number=0;
+  canGoBack:boolean=false;
+  canGoForward:boolean=false;
   constructor(private orderService:OrderService,private route: ActivatedRoute,private bookService:BookService,private calendarService:CalendarService){
   }
 
   async ngOnInit() {
     this.userId = this.route.snapshot.paramMap.get('id');
     if(this.userId){
-        const order = await this.getOrder(this.userId);
-        const bookList = await this.updateBookList(this.userId);
+        await this.getOrder(this.userId);
+        await this.updateBookList(this.userId);
         this.currentMonth = this.getUTCMonthAsEnum();
-        this.calendarService.getDays(this.currentMonth,this.books,this.bookOrder)
+        this.year= new Date().getUTCFullYear();
+        this.days = this.calendarService.getDays(this.currentMonth,this.books,this.bookOrder);
+        this.generateWeeks(this.weekIndex);
+        let newWeekIndex = this.weekIndex +14;
+        if(newWeekIndex<=this.days.length){
+          this.canGoForward=true;
+        }
     }
   }
 
-  
+  goForward2Weeks(){
+    
+    let newWeekIndex = this.weekIndex +14;
+    
+    if(newWeekIndex>=14){
+      this.canGoBack=true;
+    }else{
+      this.canGoBack=false;
+    }
+    if(newWeekIndex+14<=this.days.length){
+      this.canGoForward=true;
+    }else{
+      this.canGoForward=false;
+    }
+    this.generateWeeks(Math.min(Math.max(newWeekIndex,0),this.days.length+6));
+    this.weekIndex = (Math.min(Math.max(newWeekIndex,0),this.days.length+6));
+  }
+  goBackward2Weeks(){
+    let newWeekIndex = this.weekIndex -14;
+    if(newWeekIndex<=this.days.length-14){
+      this.canGoForward=true;
+    }else{
+      this.canGoForward=false;
+    }
+    if(newWeekIndex-14>=14){
+      this.canGoBack=true;
+    }else{
+      this.canGoBack=false;
+    }
+    this.generateWeeks(Math.min(Math.max(newWeekIndex,0),this.days.length+6));
+    this.weekIndex = (Math.min(Math.max(newWeekIndex,0),this.days.length+6));
+  }
+
   getUTCMonthAsEnum(): Months {
     const monthIndex = new Date().getUTCMonth();
     return Months[Object.keys(Months)[monthIndex] as keyof typeof Months];
     }
+    getLastDay(lastDayIndex:number,weekIndex:number){
+      if(!this.days[weekIndex+lastDayIndex-1]){
+        return "";
+      }
+      return this.days[weekIndex+lastDayIndex-1].dateString;
+    }
+    getFirstDay(weekIndex:number){
+      if (!this.days[weekIndex].dateString) {
+        return '';
+    }
+      return this.days[weekIndex].dateString;
+    }
+    generateWeeks(startIndex:number) {
+      this.weeks=[];
+      this.lastDayIndex=0;
+      const totalWeeks = 2;
+      const daysInWeek = 7;
+      let dayIndex = 0;
+
+      for (let weekIndex = 0; weekIndex < totalWeeks; weekIndex++) {
+          const week: CalendarTile[] = [];
+
+          for (let dayIndexInWeek = 0; dayIndexInWeek < daysInWeek; dayIndexInWeek++) {
+            const fullIndex = dayIndex+startIndex;
+              if (fullIndex < this.days.length) {
+                  week.push(this.days[fullIndex]);
+                  dayIndex++;
+                  this.lastDayIndex++;
+              } else {
+                  week.push({ month: null, dateString: '', bookToReadId: '', bookToReadName: '' }); // Empty day
+              }
+          }
+
+          this.weeks.push(week);
+      }
+  }
     
     async updateBookList(userId: string): Promise<void> {
       return new Promise<void>((resolve, reject) => {
