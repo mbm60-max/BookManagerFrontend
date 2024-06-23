@@ -32,6 +32,7 @@ export class BookCreateModalService {
         book.ownerId = ownerId;
         this.bookService.createBook(result).subscribe(
             createdBook => {
+              console.log("inner",createdBook);
                 this.bookCreatedSubject.next(book); // Emit the created book
                 },
               error => {

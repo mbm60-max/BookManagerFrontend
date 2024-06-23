@@ -4,13 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { BookOrder } from '../home/home.component';
 import {CdkDragDrop, CdkDropList, CdkDrag, moveItemInArray} from '@angular/cdk/drag-drop';
 import { convertToOrderedString } from '../../utils/bookOrderTostring';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   standalone:true,
   selector: 'app-book-edit-modal',
   templateUrl: './bookOrderModal.html',
   styleUrls: ['./bookOrderModal.scss'],
-  imports:[FormsModule,CdkDropList, CdkDrag],
+  imports:[FormsModule,CdkDropList, CdkDrag,MatIconModule,MatButtonModule],
 })
 export class BookOrderModal {
     orderList: BookOrder[]=[];

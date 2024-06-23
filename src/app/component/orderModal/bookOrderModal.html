@@ -1,7 +1,18 @@
-<button type="button" (click)="onSubmit()">Submit</button>
-<button type="button" (click)="onClose()">Cancel</button>
-<div cdkDropList  class="example-list" (cdkDropListDropped)="drop($event)">
-    @for (item of orderList; track item) {
-      <div class="example-box" cdkDragBoundary=".example-list" cdkDrag>{{item.name}}</div>
-    }
+
+<div class="modal-container">
+  <div class="header">
+    <p class="title">Edit Book Order</p>
+    <div class="button-container">
+      <button class="button" mat-fab type="button" (click)="onSubmit()"><mat-icon>download</mat-icon></button>
+        <button  class="button" mat-fab type="button" (click)="onClose()"><mat-icon>cancel</mat-icon></button>
+    </div>
+  </div>
+  <div class="body">
+    <p class="text">Book order controls the order you are told to read them in</p>
+    <div cdkDropList  class="example-list" (cdkDropListDropped)="drop($event)">
+        @for (item of orderList; track item) {
+          <div class="example-box" cdkDragBoundary=".example-list" cdkDrag>{{item.name}}</div>
+        }
+      </div>
+    </div>
   </div>

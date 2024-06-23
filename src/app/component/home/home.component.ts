@@ -130,6 +130,7 @@ export class HomeComponent implements OnInit {
           cols: 2,
           rows: 2,
          }
+         console.log("book creared");
         this.books=[...this.books,newBook];
         this.getOrder();
       });
@@ -144,6 +145,7 @@ export class HomeComponent implements OnInit {
       this.getOrder();
       
       this.navbarService.bookAdded$.subscribe(() => {
+        console.log("reached inside");
         this.createBook();
       });
   
@@ -154,6 +156,7 @@ export class HomeComponent implements OnInit {
   }
   
   createBook(){
+    console.log("even further");
     this.bookCreateService.openBookCreateModal(this.authStatus.id,this.bookOrders);
   }
   editBook(book:BookTile){
@@ -169,6 +172,9 @@ export class HomeComponent implements OnInit {
   viewNotes(bookId:string){
     console.log("here")
     this.router.navigate(['/notes', bookId]);
+  }
+  viewCalendar(){
+    this.router.navigate(['/calendar', this.authStatus.id]);
   }
   parseBookOrders(order:any):BookOrder[]{
     const bookOrders:BookOrder []=[];

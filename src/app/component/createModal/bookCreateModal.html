@@ -3,11 +3,11 @@
     <div class="header">
       <p class="title">Add Book</p>
       <div class="button-container">
-        <button class="button" mat-fab type="submit"><mat-icon>download</mat-icon></button>
+        <button class="button" mat-fab type="submit" form="createForm"><mat-icon>download</mat-icon></button>
           <button  class="button" mat-fab type="button" (click)="onClose()"><mat-icon>cancel</mat-icon></button>
       </div>
     </div>
-  <form (ngSubmit)="onSubmit()">
+  <form id="createForm" (ngSubmit)="onSubmit()">
     <div class="input-container">
       <div class="input-label" for="name">Name:</div>
       <input class="input-box" type="text" id="name" [(ngModel)]="data.name" name="name">

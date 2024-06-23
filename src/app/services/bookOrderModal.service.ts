@@ -20,7 +20,7 @@ export class BookOrderModalService {
     this.userId =userId;
     const dialogRef = this.dialog.open(BookOrderModal, {
       width: '400px',
-      height:'300px',
+      height:'500px',
       data: { ...bookOrders } 
     });
 

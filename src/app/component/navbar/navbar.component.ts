@@ -109,6 +109,7 @@ export class NavbarComponent implements OnInit {
   }
 
   createBook() {
+    console.log("called");
     this.navbarService.notifyBookAdded();
   }
 
