@@ -26,7 +26,7 @@ export class BookEditModalService {
         // Call a method to update the book list in the parent component
         this.bookService.updateBook(result.id, result).subscribe(
           result => {
-            console.log('Book updated:', result);
+            //console.log('Book updated:', result);
           },
           error => {
             console.error('Error updating book:', error);

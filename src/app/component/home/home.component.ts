@@ -54,23 +54,23 @@ export class HomeComponent implements OnInit {
   };
   books:BookTile[]=[];
   todaysBook:BookTile={
-    id: '1b0c5265-aa8b-4275-bf6a-1eaf5f718eb9',
+    id: '',
     cols: 0,
     rows: 0,
-    text: 'blah',
-    link: 'blah',
-    name: 'No Name',
+    text: '',
+    link: '',
+    name: '',
     totalPages: 0,
     pagesRead: 0,
     imageRef: '',
-    ownerId: '5107dcfa-eef7-4081-aed3-9be67b28fa2f',
-    author: 'No Author'
+    ownerId: '',
+    author: ''
   };
   errorMessage:string="";
   bookOrders:BookOrder[] = [];
   currentDate = new Date();
-  pagesRead:number=20;
-  totalPages:number=30;
+  pagesRead:number=0;
+  totalPages:number=0;
   formattedDate="";
   constructor(private authService: AuthService, private router: Router,private bookService:BookService,private bookEditService:BookEditModalService,private bookCreateService:BookCreateModalService,private bookDeleteService:BookDeleteModalService,private noteService:NoteService,private bookOrderService:BookOrderModalService,private orderService:OrderService,private navbarService:NavbarService) {
     this.formattedDate = formatDate(this.currentDate);
@@ -118,6 +118,11 @@ export class HomeComponent implements OnInit {
           this.orderService.updateOrderById(this.authStatus.id, this.bookOrders).subscribe(
             x => {
              console.log("updated",this.bookOrders)
+             console.log(this.bookOrders)
+          const bookFilter = this.books.filter(book => book.id === this.bookOrders[0].bookId);
+          this.todaysBook=bookFilter[0];
+          this.pagesRead=this.todaysBook.pagesRead;
+          this.totalPages=this.todaysBook.totalPages;
             },
             error => {
               console.error('Error updating order:', error);
@@ -131,16 +136,32 @@ export class HomeComponent implements OnInit {
           rows: 2,
          }
          console.log("book creared");
+         console.log(this.bookOrders)
+         const bookFilter = this.books.filter(book => book.id === this.bookOrders[0].bookId);
+         this.todaysBook=bookFilter[0];
+         this.pagesRead=this.todaysBook.pagesRead;
+         this.totalPages=this.todaysBook.totalPages;
         this.books=[...this.books,newBook];
         this.getOrder();
       });
       this.bookDeleteService.bookDeleted$.subscribe(newOrder => {
         console.log(newOrder)
         this.bookOrders =newOrder;
+        console.log(newOrder)
+        const bookFilter = this.books.filter(book => book.id === newOrder[0].bookId);
+        this.todaysBook=bookFilter[0];
+        this.pagesRead=this.todaysBook.pagesRead;
+        this.totalPages=this.todaysBook.totalPages;
       });
       this.bookOrderService.orderUpdated$.subscribe(updatedOrder =>{
         this.bookOrders = updatedOrder;
         this.updateBookList();
+        console.log(updatedOrder)
+         const bookFilter = this.books.filter(book => book.id === updatedOrder[0].bookId);
+         this.todaysBook=bookFilter[0];
+         this.pagesRead=this.todaysBook.pagesRead;
+         this.totalPages=this.todaysBook.totalPages;
+        
       })
       this.getOrder();
       
@@ -170,11 +191,13 @@ export class HomeComponent implements OnInit {
     this.bookOrderService.openBookOrderModal(this.authStatus.id,bookOrders);
   }
   viewNotes(bookId:string){
-    console.log("here")
     this.router.navigate(['/notes', bookId]);
   }
   viewCalendar(){
     this.router.navigate(['/calendar', this.authStatus.id]);
+  }
+  viewQuiz(){
+    this.router.navigate(['/quiz']);
   }
   parseBookOrders(order:any):BookOrder[]{
     const bookOrders:BookOrder []=[];
@@ -218,6 +241,12 @@ export class HomeComponent implements OnInit {
         if (this.bookOrders.length === 0) {
           this.errorMessage = "You don't have any books available, please add one";
         } else {
+          console.log("updated",this.bookOrders)
+          console.log(this.bookOrders)
+          const bookFilter = this.books.filter(book => book.id === this.bookOrders[0].bookId);
+          this.todaysBook=bookFilter[0];
+          this.pagesRead=this.todaysBook.pagesRead;
+          this.totalPages=this.todaysBook.totalPages;
           this.errorMessage = "";
         }
       },

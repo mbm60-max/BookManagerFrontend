@@ -20,6 +20,7 @@ export class CalendarService {
     this.booksInOrder=[];
   }
   getDays(currentMonth:Months,  books:BookTile[],bookOrder:BookOrder[]){
+    this.days=[];
     let month = currentMonth;
     this.currentDate = new Date();
     for (let order of bookOrder) {

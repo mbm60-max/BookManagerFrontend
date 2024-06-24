@@ -3,11 +3,14 @@ import { Component } from '@angular/core';
 import { ReactiveFormsModule,FormBuilder,FormGroup,Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule],
+  imports: [CommonModule,ReactiveFormsModule,MatIconModule,MatCardModule, MatButtonModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })

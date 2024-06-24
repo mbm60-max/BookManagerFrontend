@@ -13,10 +13,15 @@ import { Subject } from 'rxjs';
 export class BookOrderModalService {
     private orderUpdatedSubject = new Subject<BookOrder[]>();
     private orderResponse:any;
+    private isModalOpen: boolean = false;
     orderUpdated$ = this.orderUpdatedSubject.asObservable();
   constructor(private dialog: MatDialog, private orderService: OrderService) { }
     private userId:string="";
   openBookOrderModal(userId:string,bookOrders:BookOrder []): void {
+    if (this.isModalOpen) {
+      return; 
+    }
+    this.isModalOpen = true;
     this.userId =userId;
     const dialogRef = this.dialog.open(BookOrderModal, {
       width: '400px',
@@ -25,6 +30,7 @@ export class BookOrderModalService {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.isModalOpen = false;
       if (result) {
         // Call a method to update the book list in the parent component
         this.orderService.updateOrderById(this.userId, result).subscribe(

@@ -1,0 +1,134 @@
+.page{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    
+    }
+    .header{
+    margin-top: 1.5em;
+    width: 60%;
+    min-width: 300px;
+    height:100px;
+    display: flex;
+    flex-direction: column;
+    }
+    .button-container{
+        display: flex;
+        flex-direction: column;
+        width:20%;
+        align-items: center;
+        margin:5px
+    }
+    .header-content{
+        display: flex;
+        flex-direction: row;
+        height:50px;
+    }
+    .question-label{
+        width:94%!important;
+        height:30px;
+        margin-left:1em;
+        margin-top: 0.5em;
+        margin-bottom:none;
+    }
+    .text-area{
+        background-color:#e9e9f7 ;
+        border:none;
+        width:94%!important;
+        height:100%;
+        height: 200px!important;
+        overflow: scroll;
+        margin-left:1em;
+        margin-bottom:1em;
+        margin-top:none;
+        overflow: scroll;
+        background-color: rgb(255, 255, 255);
+    }
+    .body-container{
+        display: flex;
+        flex-direction: row;
+        width: 60%;
+        height:100%;
+    }
+    
+    .line {
+        width: 100%;
+        height: 3px;
+        background-color: black;
+        margin-top: 1.5em;
+      }
+    .body{
+       background-color:#e9e9f7; 
+       width: 80%;
+       min-width: 200px;
+        height:100%;
+        margin-top: 1.5em;
+        overflow: scroll;
+    }
+    .button{
+        margin: 1em;
+    }
+    
+    .spice-display-container {
+        display: flex;
+        flex-direction: column;
+    width: 80%;
+    height:100%;
+    min-height: 150px;
+    max-width: 380px;
+      }
+      .shift{
+        display: flex;
+        justify-content: end;
+        width: 60%;
+      }
+      .title{
+        width:40%;
+        margin-top:1.5em;
+      }
+      
+      .spice-bar {
+        height: 15px;
+        z-index: 4;
+        width:100%;
+        max-width: 400px;
+        height: 25px;
+        background-color: rgb(210, 244, 255);
+        margin-bottom: 10px;
+        border-radius: 5px;
+      }
+      
+      .spice-bar-inner {
+      z-index:5;
+        height: 25px;
+        width:100%;
+        background: linear-gradient(to right, 
+        rgb(35, 35, 35) 0%,     /* Start color at 0% */
+        rgb(30, 34, 35) 50%,  /* Color change at 50% */
+        rgb(7, 21, 24) 100%   /* End color at 100% */
+        );
+        border-radius: 5px;
+        text-align: right;
+      }
+      .spice-label {
+        color: black;
+        left: 0; /* Position on the left */
+        margin-left: 10px;
+        font-size: em;
+        margin-bottom: 5px;
+      }
+      .spice-label, .spice-text {
+        height: 100%; /* Ensure full height */
+        display: flex;
+        align-items:center; /* Vertically center text */
+        height: 25px;
+      }
+      
+      .spice-text {
+        color: white;
+        font-family: "Archivo";
+        font-size: 1em;
+      }
+    

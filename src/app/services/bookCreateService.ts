@@ -15,10 +15,15 @@ export class BookCreateModalService {
   bookCreated$ = this.bookCreatedSubject.asObservable();
   private bookId:string='';
   private bookOrder:BookOrder[]=[];
+  private isModalOpen: boolean = false;
 
   constructor(private dialog: MatDialog, private bookService: BookService,private orderService:OrderService) { }
 
   openBookCreateModal(ownerId:string,bookOrder:BookOrder[]): void {
+    if (this.isModalOpen) {
+      return; // If modal is already open, do nothing
+    }
+    this.isModalOpen = true;
     const bookData={name:"No Name",author:"No Author",pagesRead:0,totalPages:0,imageRef:"No Image"}
     const dialogRef = this.dialog.open(BookCreateModal, {
       width: '400px',
@@ -27,6 +32,7 @@ export class BookCreateModalService {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.isModalOpen = false;
       if (result) {
         var book = result;
         book.ownerId = ownerId;

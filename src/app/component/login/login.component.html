@@ -14,10 +14,10 @@
                         <input class="input-class" id="password" name="password" placeholder="Enter your password" formControlName="password">
                     </div>
                 </div>
-                <button class="button-alt" [disabled]="loginForm.invalid" type="submit"><span class="button-text-alt">Login</span></button>
+                <button  mat-fab [disabled]="loginForm.invalid" type="submit"><mat-icon>login</mat-icon></button>
                 <div> <i class="error-text" *ngIf="loginForm.controls['email'].invalid && (loginForm.controls['email'].dirty || loginForm.controls['email'].touched)">Email is Required and Must be Valid</i></div>
                 <div> <i class="error-text" *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)">Password is Required and Must be Valid</i></div>
-                <div> <button class="register-button"  (click)="onRegister()"><span class="register-text">Register</span></button></div>
+                <div> <button mat-fab  (click)="onRegister()"><mat-icon>person_add</mat-icon></button></div>
             </form>
         </div>
     </div>

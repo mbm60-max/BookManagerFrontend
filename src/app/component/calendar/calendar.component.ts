@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {  ReactiveFormsModule} from '@angular/forms';
 
-import {ActivatedRoute, RouterModule } from '@angular/router';
+import {ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BookOrder, BookTile } from '../home/home.component';
 import { OrderService } from '../../services/order.service';
 import { BookService } from '../../services/book.service';
@@ -53,7 +53,20 @@ export class CalendarComponent implements OnInit {
   lastDayIndex:number=0;
   canGoBack:boolean=false;
   canGoForward:boolean=false;
-  constructor(private orderService:OrderService,private route: ActivatedRoute,private bookService:BookService,private calendarService:CalendarService){
+  constructor(private orderService:OrderService,private route: ActivatedRoute,private bookService:BookService,private calendarService:CalendarService,private router: Router){
+    this.books=[];
+    this.bookOrder=[];
+    this.weeks=[];
+    this.days=[];
+    this.currentMonth=null;
+    this.days=[];
+    this.weeks= [];
+    this.year =null;
+    this.weekIndex=0;
+    this.firstDayIndex=0;
+    this.lastDayIndex=0;
+    this.canGoBack=false;
+    this.canGoForward=false;
   }
 
   async ngOnInit() {
@@ -64,6 +77,7 @@ export class CalendarComponent implements OnInit {
         this.currentMonth = this.getUTCMonthAsEnum();
         this.year= new Date().getUTCFullYear();
         this.days = this.calendarService.getDays(this.currentMonth,this.books,this.bookOrder);
+        console.log("this.days",this.days)
         this.generateWeeks(this.weekIndex);
         let newWeekIndex = this.weekIndex +14;
         if(newWeekIndex<=this.days.length){
@@ -88,6 +102,11 @@ export class CalendarComponent implements OnInit {
     }
     this.generateWeeks(Math.min(Math.max(newWeekIndex,0),this.days.length+6));
     this.weekIndex = (Math.min(Math.max(newWeekIndex,0),this.days.length+6));
+  }
+  viewNotes(bookId:string){
+    if(bookId!=""){
+      this.router.navigate(['/notes', bookId]);
+    }
   }
   goBackward2Weeks(){
     let newWeekIndex = this.weekIndex -14;
@@ -226,5 +245,40 @@ export class CalendarComponent implements OnInit {
         }
       );
     });
+  }
+  isToday(dateString: string): boolean {
+    const todayString = this.getTodayUtcDateString();
+    return dateString.includes(todayString);
+  }
+
+  getTodayUtcDateString(): string {
+    const today = new Date();
+    const utcDay = today.getUTCDate();
+    const utcMonth = today.getUTCMonth() + 1;
+    const utcYear = today.getUTCFullYear();
+
+    const dayString = utcDay < 10 ? '0' + utcDay : utcDay.toString();
+    const monthString = utcMonth < 10 ? '0' + utcMonth : utcMonth.toString();
+
+    const dateSuffix = this.getDaySuffix(utcDay);
+    return `${utcDay}${dateSuffix} ${this.getMonthName(utcMonth)}`;
+  }
+
+  getDaySuffix(day: number): string {
+    if (day > 3 && day < 21) return 'th';
+    switch (day % 10) {
+      case 1: return 'st';
+      case 2: return 'nd';
+      case 3: return 'rd';
+      default: return 'th';
+    }
+  }
+
+  getMonthName(monthIndex: number): string {
+    const monthNames = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    return monthNames[monthIndex - 1];
   }
 }
