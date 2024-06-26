@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environments';
 
 export interface AuthProps{
   email:string;
@@ -12,7 +13,7 @@ export interface AuthProps{
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:5058/auth';
+  private baseUrl = environment.baseUrl + '/auth';
   private authStatus: AuthProps = {
     email: '',
     name: '',
