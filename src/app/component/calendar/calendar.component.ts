@@ -6,10 +6,11 @@ import {ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BookOrder, BookTile } from '../home/home.component';
 import { OrderService } from '../../services/order.service';
 import { BookService } from '../../services/book.service';
-import { CalendarService } from '../../services/calendar.service';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { CalendarService } from '../../services/calendar.service';
 
 export interface CalendarTile{
     dateString:string;
@@ -77,10 +78,9 @@ export class CalendarComponent implements OnInit {
         this.currentMonth = this.getUTCMonthAsEnum();
         this.year= new Date().getUTCFullYear();
         this.days = this.calendarService.getDays(this.currentMonth,this.books,this.bookOrder);
-        console.log("this.days",this.days)
         this.generateWeeks(this.weekIndex);
         let newWeekIndex = this.weekIndex +14;
-        if(newWeekIndex<=this.days.length){
+        if(newWeekIndex<=this.days.length-1){
           this.canGoForward=true;
         }
     }
@@ -95,7 +95,7 @@ export class CalendarComponent implements OnInit {
     }else{
       this.canGoBack=false;
     }
-    if(newWeekIndex+14<=this.days.length){
+    if(newWeekIndex+14<=this.days.length-1){
       this.canGoForward=true;
     }else{
       this.canGoForward=false;
@@ -115,7 +115,7 @@ export class CalendarComponent implements OnInit {
     }else{
       this.canGoForward=false;
     }
-    if(newWeekIndex-14>=14){
+    if(newWeekIndex-14>=0){
       this.canGoBack=true;
     }else{
       this.canGoBack=false;
@@ -169,7 +169,6 @@ export class CalendarComponent implements OnInit {
       return new Promise<void>((resolve, reject) => {
         this.bookService.getBooks(userId).subscribe(
           (response) => {
-            console.log('called update books with arguments', response);
             this.books = response.map((book: { cols: number; rows: number; }) => {
               book.cols = 3;
               book.rows = 3;
@@ -230,7 +229,6 @@ export class CalendarComponent implements OnInit {
       this.orderService.getOrderById(id).subscribe(
         (response) => {
           this.bookOrder = this.parseBookOrders(response);
-          console.log("order", response);
           if (this.bookOrder.length === 0) {
             this.errorMessage = "You don't have any books available, please add one";
           } else {
