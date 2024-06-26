@@ -21,7 +21,6 @@ export class BookEditModalService {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
       if (result) {
         // Call a method to update the book list in the parent component
         this.bookService.updateBook(result.id, result).subscribe(

@@ -31,7 +31,6 @@ export class LoginComponent {
           if (res.id && res.isAuthenticated) {
             const name = "None";
             const id = res.id;
-            console.log("Authenticated");
             this.authService.setAuth({
             name, id, email, isLoggedIn: true
             });

@@ -19,7 +19,6 @@ export class BookEditModal {
   ) { }
 
   onSubmit(): void {
-    console.log("clicked edit")
     this.dialogRef.close(this.data);
   }
 

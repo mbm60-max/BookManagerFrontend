@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable, catchError, tap, throwError } from 'rxjs';
 import { UpdatedNote } from '../component/note/note.component';
 import { BookOrder } from '../component/home/home.component';
-
+import { environment } from '../../environments/environments';
 
 export interface Note{
   id:string,
@@ -14,7 +14,7 @@ export interface Note{
 })
 export class OrderService {
 
-  private baseUrl = 'http://localhost:5058/order';
+  private baseUrl = environment.baseUrl + '/order';
   
   constructor(private http: HttpClient) {}
 

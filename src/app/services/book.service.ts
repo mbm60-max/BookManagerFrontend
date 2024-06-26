@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, tap, throwError } from 'rxjs';
+import { environment } from '../../environments/environments';
 
 export interface Book{
   id:string,
@@ -16,8 +17,7 @@ export interface Book{
   providedIn: 'root'
 })
 export class BookService {
-
-  private baseUrl = 'http://localhost:5058/books';
+  private baseUrl = environment.baseUrl + '/books';
   
   constructor(private http: HttpClient) {}
 

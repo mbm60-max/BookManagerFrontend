@@ -37,10 +37,8 @@ export class BookDeleteModalService {
         // Call a method to update the book list in the parent component
         this.bookService.deleteBook(result.id, result).subscribe(
             result => {
-                console.log('Book deleted:', result);
                 this.noteService.deleteNote(this.bookId).subscribe(
                     result => {
-                        console.log("Note Deleted:", this.bookId);
                         const indexOrder = this.bookOrder.findIndex(b => b.bookId === this.bookId);
                         const indexBooks = this.books.findIndex(b => b.id === this.bookId);
                         if (indexOrder !== -1 && indexBooks !== -1) {

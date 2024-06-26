@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError, tap, throwError } from 'rxjs';
 import { UpdatedNote } from '../component/note/note.component';
+import { environment } from '../../environments/environments';
 
 
 export interface Note{
@@ -12,9 +13,7 @@ export interface Note{
   providedIn: 'root'
 })
 export class NoteService {
-
-  private baseUrl = 'http://localhost:5058/notes';
-  
+  private baseUrl = environment.baseUrl + '/notes';
   constructor(private http: HttpClient) {}
 
   getNoteById(NoteId:string):Observable<any>{
