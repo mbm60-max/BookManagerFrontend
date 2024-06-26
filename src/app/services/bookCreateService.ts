@@ -21,7 +21,7 @@ export class BookCreateModalService {
 
   openBookCreateModal(ownerId:string,bookOrder:BookOrder[]): void {
     if (this.isModalOpen) {
-      return; // If modal is already open, do nothing
+      return; 
     }
     this.isModalOpen = true;
     const bookData={name:"No Name",author:"No Author",pagesRead:0,totalPages:0,imageRef:"No Image"}

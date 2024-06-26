@@ -24,16 +24,11 @@ export class OrderService {
   }
   updateOrderById(UserId: string, order:BookOrder[]): Observable<any> {
     const url = `${this.baseUrl}/${UserId}`;
-    console.log("Attempting to update order by user id",UserId);
-    
-    // Log the orderJsonAsString for debugging
-    console.log("Order JSON:", order);
     return this.http.put<any>(url, order);
   }
 
   deleteOrder(UserId:string):Observable<any>{
     const url = `${this.baseUrl}/${UserId}`;
-    console.log("attempting to delete order by user id")
     return this.http.delete<any>(url)
   }
 }

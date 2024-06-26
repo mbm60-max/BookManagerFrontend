@@ -35,7 +35,7 @@
       <div class="line"></div>
       </div>
       <div class="body">
-        <div class="body-inner">
+        <div *ngIf="books.length>0" class="body-inner">
         <div class="body15">
           <div class="spice-display-container">
             <span class="spice-label">Pages Read</span>
@@ -71,16 +71,17 @@
           </div>
         </div>
       </div>
+      <div  *ngIf="books.length<=0"> Please add some books</div>
       </div>
       </div> 
       <div *ngIf="authStatus.isLoggedIn" class="booksContainer">
         <div class="banner"><div class="banner-text">Your Collection</div>
         <div class="line"></div>
         </div>
-        <div class="booksBody">
+        <div  class="booksBody">
           <p *ngIf="errorMessage">{{ errorMessage }}</p>
           
-          <div class="book-grid">
+          <div *ngIf="books.length>0" class="book-grid">
             <div *ngFor="let book of books" class="book-item">
               <mat-card class="example-card" appearance="outlined">
                 <mat-card-header>
@@ -97,7 +98,8 @@
               
             </div>
           </div>
-          
+          <div  *ngIf="books.length<=0"> Please add some books</div>
         </div>  
+        
       </div> 
   </div>

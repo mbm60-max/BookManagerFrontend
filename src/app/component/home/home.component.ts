@@ -79,7 +79,6 @@ export class HomeComponent implements OnInit {
   
     this.bookService.getBooks(this.authStatus.id).subscribe(
       (response) => {  
-        console.log('called upate books with arguments',response)
         this.books = response.map((book: { cols: number; rows: number; }) => {
           // Assign arbitrary values to cols and rows properties
           book.cols = 3 // Random number between 1 and 5 for cols
@@ -107,7 +106,7 @@ export class HomeComponent implements OnInit {
        // Subscribe to the bookUpdated$ observable
        this.bookEditService.bookUpdated$.subscribe(updatedBook => {
         const indexBook = this.books.findIndex(book => book.id === updatedBook.id);
-        const indexOrder = this.books.findIndex(book => book.id === updatedBook.id);
+        const indexOrder = this.bookOrders.findIndex(book => book.bookId === updatedBook.id);
         if (indexBook !== -1 && indexOrder !== -1) {
           // Replace the old book data with the updated book data in the frontend and in order
           this.books[indexBook] = updatedBook;
@@ -117,8 +116,6 @@ export class HomeComponent implements OnInit {
           this.bookOrders[indexOrder] = orderToEdit;
           this.orderService.updateOrderById(this.authStatus.id, this.bookOrders).subscribe(
             x => {
-             console.log("updated",this.bookOrders)
-             console.log(this.bookOrders)
           const bookFilter = this.books.filter(book => book.id === this.bookOrders[0].bookId);
           this.todaysBook=bookFilter[0];
           this.pagesRead=this.todaysBook.pagesRead;
@@ -130,24 +127,22 @@ export class HomeComponent implements OnInit {
           );
         }
       });
-      this.bookCreateService.bookCreated$.subscribe(newBook => {
+      this.bookCreateService.bookCreated$.subscribe(async newBook => {
         newBook={ ...newBook,
           cols: 2,
           rows: 2,
          }
-         console.log("book creared");
-         console.log(this.bookOrders)
-         const bookFilter = this.books.filter(book => book.id === this.bookOrders[0].bookId);
-         this.todaysBook=bookFilter[0];
-         this.pagesRead=this.todaysBook.pagesRead;
-         this.totalPages=this.todaysBook.totalPages;
+         await this.getOrder();
+         if(this.books.length>0){
+          const bookFilter = this.books.filter(book => book.id === this.bookOrders[0].bookId);
+          this.todaysBook=bookFilter[0];
+          this.pagesRead=this.todaysBook.pagesRead;
+          this.totalPages=this.todaysBook.totalPages;
+         }
         this.books=[...this.books,newBook];
-        this.getOrder();
       });
       this.bookDeleteService.bookDeleted$.subscribe(newOrder => {
-        console.log(newOrder)
         this.bookOrders =newOrder;
-        console.log(newOrder)
         const bookFilter = this.books.filter(book => book.id === newOrder[0].bookId);
         this.todaysBook=bookFilter[0];
         this.pagesRead=this.todaysBook.pagesRead;
@@ -156,7 +151,6 @@ export class HomeComponent implements OnInit {
       this.bookOrderService.orderUpdated$.subscribe(updatedOrder =>{
         this.bookOrders = updatedOrder;
         this.updateBookList();
-        console.log(updatedOrder)
          const bookFilter = this.books.filter(book => book.id === updatedOrder[0].bookId);
          this.todaysBook=bookFilter[0];
          this.pagesRead=this.todaysBook.pagesRead;
@@ -166,7 +160,6 @@ export class HomeComponent implements OnInit {
       this.getOrder();
       
       this.navbarService.bookAdded$.subscribe(() => {
-        console.log("reached inside");
         this.createBook();
       });
   
@@ -177,7 +170,6 @@ export class HomeComponent implements OnInit {
   }
   
   createBook(){
-    console.log("even further");
     this.bookCreateService.openBookCreateModal(this.authStatus.id,this.bookOrders);
   }
   editBook(book:BookTile){
@@ -237,12 +229,9 @@ export class HomeComponent implements OnInit {
     this.orderService.getOrderById(this.authStatus.id).subscribe(
       (response) => {
         this.bookOrders = this.parseBookOrders(response);
-        console.log("order",response)
         if (this.bookOrders.length === 0) {
           this.errorMessage = "You don't have any books available, please add one";
         } else {
-          console.log("updated",this.bookOrders)
-          console.log(this.bookOrders)
           const bookFilter = this.books.filter(book => book.id === this.bookOrders[0].bookId);
           this.todaysBook=bookFilter[0];
           this.pagesRead=this.todaysBook.pagesRead;
